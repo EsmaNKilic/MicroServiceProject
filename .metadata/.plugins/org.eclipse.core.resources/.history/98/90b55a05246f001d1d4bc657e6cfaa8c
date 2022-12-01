@@ -1,0 +1,21 @@
+package com.kodlamaio.inventoryservice.entities;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name="brands")
+public class Brand {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	
+	@Column(name = "id")
+	private String id;
+	
+	@Column(name = "name")
+	private String name;
+	
+	@OneToMany(mappedBy="brand")
+	private List<Model> models;
+
+}

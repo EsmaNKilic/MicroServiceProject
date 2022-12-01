@@ -1,0 +1,5 @@
+package com.kodlamaio.inventoryservice.business.responses.Update;
+
+public class UpdateBrandResponse {
+	private String id;
+}

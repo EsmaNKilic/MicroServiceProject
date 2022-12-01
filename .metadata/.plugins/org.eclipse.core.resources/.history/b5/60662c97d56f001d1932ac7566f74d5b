@@ -1,0 +1,15 @@
+package com.kodlamaio.inventoryservice.business.concrete;
+
+import java.util.List;
+
+import com.kodlamaio.inventoryservice.business.abstracts.ModelService;
+import com.kodlamaio.inventoryservice.business.requests.CreateBrandRequest;
+import com.kodlamaio.inventoryservice.business.requests.CreateModelRequest;
+import com.kodlamaio.inventoryservice.business.responses.Create.CreateBrandResponse;
+import com.kodlamaio.inventoryservice.business.responses.GetAll.GetAllBrandResponse;
+import com.kodlamaio.inventoryservice.business.responses.GetAll.GetAllModelResponse;
+
+public class ModelManager implements ModelService {
+	List<GetAllModelResponse> getAll();
+	CreateModelResponse add(CreateModelRequest createModelRequest);
+}
