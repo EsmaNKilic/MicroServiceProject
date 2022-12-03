@@ -99,7 +99,7 @@ public class ModelManager implements ModelService {
 	}
 	
 	
-	// RULES
+	// CONTROLS
 	
 	
 	private void checkIfModelExistsByName(String name) {

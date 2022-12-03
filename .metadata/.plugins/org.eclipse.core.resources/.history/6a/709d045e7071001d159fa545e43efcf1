@@ -1,0 +1,9 @@
+package com.kodlama.rentalService.business.abstracts;
+
+import com.kodlama.rentalService.business.requests.CreateRentalRequest;
+import com.kodlama.rentalService.business.response.CreateRentalResponse;
+
+public interface RentalService {
+	
+	CreateRentalResponse add(CreateRentalRequest createRentalRequest);
+}

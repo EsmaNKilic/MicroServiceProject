@@ -1,0 +1,5 @@
+package com.kodlama.rentalService.business.response;
+
+public class CreateRentalResponse {
+
+}

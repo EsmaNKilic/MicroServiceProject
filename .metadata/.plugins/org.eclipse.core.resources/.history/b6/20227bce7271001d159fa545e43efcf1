@@ -1,0 +1,13 @@
+package com.kodlama.rentalService.business.abstracts;
+
+import com.kodlama.rentalService.business.requests.CreateRentalRequest;
+import com.kodlama.rentalService.business.requests.UpdateRentalRequest;
+import com.kodlama.rentalService.business.response.CreateRentalResponse;
+import com.kodlama.rentalService.business.response.UpdateRentalResponse;
+
+public interface RentalService {
+	
+	CreateRentalResponse add(CreateRentalRequest createRentalRequest);
+	UpdateRentalResponse update(UpdateRentalRequest updateRentalRequest);
+	void delete(String id);
+}

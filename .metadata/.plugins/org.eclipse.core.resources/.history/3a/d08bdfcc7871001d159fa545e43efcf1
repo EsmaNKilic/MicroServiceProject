@@ -1,0 +1,5 @@
+package com.kodlama.rentalService.configurations.kafka;
+
+public class KafkaTopicConfiguration {
+
+}

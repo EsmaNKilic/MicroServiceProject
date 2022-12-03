@@ -1,0 +1,5 @@
+package com.kodlama.rentalService.client;
+
+public interface CarClient {
+
+}

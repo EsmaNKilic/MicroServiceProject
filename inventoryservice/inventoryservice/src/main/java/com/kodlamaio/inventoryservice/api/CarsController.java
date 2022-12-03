@@ -57,8 +57,13 @@ public class CarsController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public void delete(@PathVariable String id) {
+	public void delete(@PathVariable String id) { 
 		this.carService.delete(id);
 	}
+	
+	@GetMapping("/checkcaravailable/{id}")
+	public void checkIfCarAvailable(@PathVariable String id) {
+	        this.carService.checkIfCarAvailable(id);
+	    }
 }
 

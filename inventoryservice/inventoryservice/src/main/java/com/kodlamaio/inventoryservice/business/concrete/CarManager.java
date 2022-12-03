@@ -22,7 +22,6 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-
 public class CarManager implements CarService {
 
 	private CarRepository carRepository;
@@ -76,6 +75,7 @@ public class CarManager implements CarService {
 	public UpdateCarResponse update(UpdateCarRequest updateCarRequest) {
 		
 		checkIfCarExistsById(updateCarRequest.getId());
+		checkIfCarExistsByPlate(updateCarRequest.getPlate());
 		
 		Car car = this.modelMapperService.forRequest()
 				.map(updateCarRequest, Car.class);
@@ -99,7 +99,28 @@ public class CarManager implements CarService {
 	}
 	
 	
-	// RULES
+	@Override
+	public void updateCarState(int state) {
+		
+		 this.carRepository.findByState(state);
+	}
+	
+	
+	@Override
+	public void checkIfCarAvailable(String id) {
+		
+		Car car = carRepository.findById(id).get();
+		
+        if (car.getState() != 3) {
+        	
+            throw new BusinessException("CAR NOT AVAILABLE");
+        }
+		
+	}
+	
+	
+	
+	// CONTROLS
 	
 	
 	private void checkIfCarExistsByPlate(String plate) {
@@ -119,8 +140,5 @@ public class CarManager implements CarService {
 		
 		}
 	}
-	
-	
-	
 
 }

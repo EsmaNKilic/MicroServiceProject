@@ -98,7 +98,7 @@ public class BrandManager implements BrandService {
 	}
 	
 	
-	// RULES
+	// CONTROLS
 	
 
 	private void checkIfBrandExistsByName(String name) {
