@@ -1,0 +1,5 @@
+package com.kodlama.filterService.entities;
+
+public class CarFilter {
+
+}

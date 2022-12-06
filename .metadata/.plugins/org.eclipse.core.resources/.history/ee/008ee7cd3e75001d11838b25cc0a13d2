@@ -1,0 +1,5 @@
+package com.kodlama.filterService.kafka;
+
+public class CarFilterConsumer {
+
+}

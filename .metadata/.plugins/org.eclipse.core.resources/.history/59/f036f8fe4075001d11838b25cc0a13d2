@@ -1,0 +1,5 @@
+package com.kodlama.invoiceService.business.requests;
+
+public class UpdateInvoiceRequest {
+
+}

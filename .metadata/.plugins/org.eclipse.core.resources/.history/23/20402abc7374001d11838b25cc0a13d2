@@ -1,0 +1,76 @@
+package com.kodlama.paymentService.business.concretes;
+
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+
+import com.kodlama.paymentService.business.abstracts.PaymentService;
+import com.kodlama.paymentService.business.requests.CreatePaymentRequest;
+import com.kodlama.paymentService.business.requests.UpdatePaymentRequest;
+import com.kodlama.paymentService.business.responses.CreatePaymentResponse;
+import com.kodlama.paymentService.business.responses.GetAllPaymentResponse;
+import com.kodlama.paymentService.business.responses.GetPaymentResponse;
+import com.kodlama.paymentService.business.responses.UpdatePaymentResponse;
+import com.kodlama.paymentService.dataAccess.PaymentRepository;
+import com.kodlama.paymentService.entities.Payment;
+import com.kodlamaio.common.utilities.mapping.ModelMapperService;
+
+import lombok.AllArgsConstructor;
+
+@Service
+@AllArgsConstructor
+public class PaymentManager implements PaymentService{
+
+	private PaymentRepository paymentRepository;
+	private ModelMapperService modelMapperService;
+	
+	@Override
+	public List<GetAllPaymentResponse> getAll() {
+		
+		List<Payment> payments = this.paymentRepository.findAll();
+		List<GetAllPaymentResponse> response = payments.stream()
+				.map(payment -> modelMapperService.forResponse()
+				.map(payment, GetAllPaymentResponse.class)).collect(Collectors.toList());
+	
+		return response;
+	}
+
+	@Override
+	public GetPaymentResponse getById(String id) {
+		
+		Payment payment = this.paymentRepository.findById(id).get();
+		
+		GetPaymentResponse response = this.modelMapperService.forResponse()
+				.map(payment, GetPaymentResponse.class);
+		
+		return response;
+	}
+
+	@Override
+	public CreatePaymentResponse add(CreatePaymentRequest createPaymentRequest) {
+		
+		Payment payment = modelMapperService.forRequest().map(createPaymentRequest, Payment.class);
+        payment.setId(UUID.randomUUID().toString());
+        
+        this.paymentRepository.save(payment);
+        
+        CreatePaymentResponse response = this.modelMapperService.forResponse().map(payment, CreatePaymentResponse.class);
+		
+		return response;
+	}
+
+	@Override
+	public UpdatePaymentResponse update(UpdatePaymentRequest updatePaymentRequest) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void delete(String id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

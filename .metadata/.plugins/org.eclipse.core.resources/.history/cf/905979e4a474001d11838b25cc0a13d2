@@ -1,0 +1,7 @@
+package com.kodlama.filterService.business.concretes;
+
+import com.kodlama.filterService.business.abstracts.CarFilterService;
+
+public class CarFilterManager implements CarFilterService{
+
+}

@@ -1,0 +1,21 @@
+package com.kodlama.filterService.business.concretes;
+
+import com.kodlama.filterService.business.abstracts.CarFilterService;
+import com.kodlama.filterService.core.results.Result;
+import com.kodlama.filterService.entities.CarFilter;
+
+public class CarFilterManager implements CarFilterService{
+
+	@Override
+	public Result add(CarFilter carFilter) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Result update(CarFilter carFilter) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

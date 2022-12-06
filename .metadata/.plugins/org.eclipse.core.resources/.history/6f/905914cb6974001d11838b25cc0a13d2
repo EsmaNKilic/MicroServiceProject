@@ -1,0 +1,7 @@
+package com.kodlama.paymentService.business.concretes;
+
+import com.kodlama.paymentService.business.abstracts.PaymentService;
+
+public class PaymentManager implements PaymentService{
+
+}

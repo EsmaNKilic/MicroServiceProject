@@ -1,0 +1,5 @@
+package com.kodlama.filterService.business.abstracts;
+
+public interface CarFilterService {
+
+}

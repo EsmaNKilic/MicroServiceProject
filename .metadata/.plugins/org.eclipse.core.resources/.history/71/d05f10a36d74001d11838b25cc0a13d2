@@ -1,0 +1,5 @@
+package com.kodlama.invoiceService.entities;
+
+public class Invoice {
+
+}

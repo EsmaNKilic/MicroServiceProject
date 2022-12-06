@@ -1,0 +1,5 @@
+package com.kodlama.paymentService.business.requests;
+
+public class UpdatePaymentRequest {
+
+}

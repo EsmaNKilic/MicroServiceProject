@@ -1,0 +1,45 @@
+package com.kodlama.paymentService.business.concretes;
+
+import java.util.List;
+
+import com.kodlama.paymentService.business.abstracts.PaymentService;
+import com.kodlama.paymentService.business.requests.CreatePaymentRequest;
+import com.kodlama.paymentService.business.requests.UpdatePaymentRequest;
+import com.kodlama.paymentService.business.responses.CreatePaymentResponse;
+import com.kodlama.paymentService.business.responses.GetAllPaymentResponse;
+import com.kodlama.paymentService.business.responses.GetPaymentResponse;
+import com.kodlama.paymentService.business.responses.UpdatePaymentResponse;
+
+public class PaymentManager implements PaymentService{
+
+	@Override
+	public List<GetAllPaymentResponse> getAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public GetPaymentResponse getById(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CreatePaymentResponse add(CreatePaymentRequest creatPaymentRequest) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UpdatePaymentResponse update(UpdatePaymentRequest updatePaymentRequest) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void delete(String id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

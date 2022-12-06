@@ -1,0 +1,41 @@
+package com.kodlama.invoiceService.entities;
+
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name="invoices")//faturalama
+public class Invoice {
+
+	@Id
+	@Column(name="id")
+	private String id;
+	
+	@Column(name="car_id")
+	private String carId;
+	
+	@Column(name="name_on_card")
+	private String nameOnCard;
+	
+	@Column(name="model_name")
+	private String modelName;
+	
+	@Column(name="model_year")
+	private int modelYear;
+	
+	@Column(name = "daily_price")
+	private double dailyPrice;
+	
+	@Column(name="total_price")
+	private double totalPrice;
+	
+	@Column(name="rented_for_days")
+	private int rentedForDays;
+}

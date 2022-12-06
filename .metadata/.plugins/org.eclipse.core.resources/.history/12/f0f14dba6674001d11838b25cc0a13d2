@@ -1,0 +1,5 @@
+package com.kodlama.paymentService.entities;
+
+public class Payment {
+
+}
