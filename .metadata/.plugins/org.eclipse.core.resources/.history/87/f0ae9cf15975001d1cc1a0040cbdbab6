@@ -1,0 +1,7 @@
+application: ''
+cloud: ''
+config: ''
+import: configserver:http://localhost:8888,optional:file:.env[.properties]
+name: invoice
+profile: ${PROFILE}
+spring: ''

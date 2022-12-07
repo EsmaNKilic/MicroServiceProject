@@ -1,0 +1,37 @@
+package com.kodlamaio.inventoryservice.kafka.producer.inventories.car;
+
+import org.apache.kafka.clients.admin.NewTopic;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.KafkaHeaders;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.stereotype.Service;
+
+import com.kodlamaio.common.events.inventories.car.CarDeletedEvent;
+import com.kodlamaio.common.events.inventories.car.CarUpdatedEvent;
+
+@Service
+public class CarDeleteProducer {
+	private static final Logger LOGGER = LoggerFactory.getLogger(CarDeleteProducer.class);
+
+	private NewTopic topic;
+	
+	private KafkaTemplate<String, CarDeletedEvent> kafkaTemplate;
+	
+	public CarDeleteProducer(NewTopic topic, KafkaTemplate<String, CarDeletedEvent> kafkaTemplate) {
+		this.topic = topic;
+		this.kafkaTemplate = kafkaTemplate;
+	}
+	
+	public void sendMessage(CarDeletedEvent carDeletedEvent) {
+		LOGGER.info(String.format("Car deleted event => %s", carDeletedEvent.toString()));
+		
+		Message<CarDeletedEvent> message = MessageBuilder
+				.withPayload(carDeletedEvent)
+				.setHeader(KafkaHeaders.TOPIC, topic.name()).build();
+		
+		kafkaTemplate.send(message); 
+	}
+}

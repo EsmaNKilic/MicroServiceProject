@@ -1,0 +1,5 @@
+package com.kodlamaio.common.events.inventories;
+
+public class InventoeyCreatedProducer {
+
+}

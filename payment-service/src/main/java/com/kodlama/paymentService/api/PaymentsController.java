@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kodlama.paymentService.business.abstracts.PaymentService;
+import com.kodlama.paymentService.business.requests.CheckPaymentRequest;
 import com.kodlama.paymentService.business.requests.CreatePaymentRequest;
 import com.kodlama.paymentService.business.requests.UpdatePaymentRequest;
 import com.kodlama.paymentService.business.responses.CreatePaymentResponse;
@@ -52,5 +54,23 @@ public class PaymentsController {
 	public void delete(@PathVariable String id) {
 		paymentService.delete(id);
 	}
+	
+	@PostMapping("/check")
+    public void checkIfPaymentSuccess(
+            @RequestParam String cardNumber,
+            @RequestParam String nameOnCard,
+            @RequestParam int cardExpirationYear,
+            @RequestParam int cardExpirationMonth,
+            @RequestParam String cvv,
+            @RequestParam double price) {
+		CheckPaymentRequest checkPaymentRequest = new CheckPaymentRequest(
+				cardNumber,
+                nameOnCard,
+                cardExpirationYear,
+                cardExpirationMonth,
+                cvv,
+                price);
+		paymentService.checkIfPaymentSuccess(checkPaymentRequest);
+    }
 	
 }

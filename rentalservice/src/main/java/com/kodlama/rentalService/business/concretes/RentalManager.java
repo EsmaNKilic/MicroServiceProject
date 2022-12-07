@@ -16,13 +16,11 @@ import com.kodlama.rentalService.business.response.UpdateRentalResponse;
 import com.kodlama.rentalService.client.CarClient;
 import com.kodlama.rentalService.dataAccess.RentalRepository;
 import com.kodlama.rentalService.entities.Rental;
-import com.kodlama.rentalService.kafka.RentalAddProducer;
-import com.kodlama.rentalService.kafka.RentalUpdateProducer;
-import com.kodlamaio.common.events.RentalCreatedEvent;
-import com.kodlamaio.common.events.RentalUpdatedEvent;
+import com.kodlama.rentalService.kafka.RentalProducer;
+import com.kodlamaio.common.events.rentals.RentalCreatedEvent;
+import com.kodlamaio.common.events.rentals.RentalUpdatedEvent;
 import com.kodlamaio.common.utilities.exceptions.BusinessException;
 import com.kodlamaio.common.utilities.mapping.ModelMapperService;
-
 
 import lombok.AllArgsConstructor;
 
@@ -32,8 +30,7 @@ public class RentalManager implements RentalService {
 
 	private RentalRepository rentalRepository;
 	private ModelMapperService modelMapperService;
-	private RentalAddProducer rentalAddProducer;
-	private RentalUpdateProducer rentalUpdateProducer;
+	private RentalProducer rentalProducer;
 	private CarClient carClient;
 	
 	
@@ -77,10 +74,10 @@ public class RentalManager implements RentalService {
 		this.rentalRepository.save(rental);
 		
 		RentalCreatedEvent rentalCreatedEvent = new RentalCreatedEvent();
-		rentalCreatedEvent.setCarId(rentalCreatedEvent.getCarId());
+		rentalCreatedEvent.setCarId(rentalCreatedEvent.getCarId()); 
 		rentalCreatedEvent.setMessage("Rental Created");
 		
-		this.rentalAddProducer.sendMessage(rentalCreatedEvent);
+		this.rentalProducer.sendMessage(rentalCreatedEvent);
 		
 		CreateRentalResponse createRentalResponse = this.modelMapperService.forResponse()
 				.map(rental, CreateRentalResponse.class);
@@ -107,7 +104,7 @@ public class RentalManager implements RentalService {
 		
 		this.rentalRepository.save(rental);
 		
-		this.rentalUpdateProducer.sendMessage(rentalUpdateEvent);
+		this.rentalProducer.sendMessage(rentalUpdateEvent);
 		
 		UpdateRentalResponse updateRentalResponse = this.modelMapperService.forResponse()
 				.map(rental, UpdateRentalResponse.class);

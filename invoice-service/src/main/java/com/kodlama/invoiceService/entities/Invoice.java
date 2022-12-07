@@ -1,5 +1,7 @@
 package com.kodlama.invoiceService.entities;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -27,6 +29,9 @@ public class Invoice {
 	@Column(name="model_name")
 	private String modelName;
 	
+	@Column(name="brand_name")
+	private String brandName;
+	
 	@Column(name="model_year")
 	private int modelYear;
 	
@@ -38,4 +43,7 @@ public class Invoice {
 	
 	@Column(name="rented_for_days")
 	private int rentedForDays;
+	
+	@Column(name = "rented")// kiralandı bilgisi
+    private LocalDateTime rented;
 }

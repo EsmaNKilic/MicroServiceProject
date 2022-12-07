@@ -1,0 +1,5 @@
+package com.kodlamaio.inventoryservice.kafka.producer.inventories;
+
+public class InventoryProducer {
+
+}

@@ -1,5 +1,0 @@
-package com.kodlamaio.inventoryservice.business.responses.Create;
-
-public class CreateCarResponse {
-
-}

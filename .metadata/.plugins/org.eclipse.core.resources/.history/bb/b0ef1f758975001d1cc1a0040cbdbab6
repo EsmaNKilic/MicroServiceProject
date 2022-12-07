@@ -1,0 +1,37 @@
+package com.kodlamaio.inventoryservice.kafka.producer.inventories.brand;
+
+import org.apache.kafka.clients.admin.NewTopic;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.KafkaHeaders;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.stereotype.Service;
+
+import com.kodlamaio.common.events.inventories.brand.BrandDeletedEvent;
+import com.kodlamaio.common.events.inventories.brand.BrandUpdatedEvent;
+
+@Service
+public class BrandUpdateProducer {
+	private static final Logger LOGGER = LoggerFactory.getLogger(BrandUpdateProducer.class);
+
+	private NewTopic topic;
+	
+	private KafkaTemplate<String, BrandUpdatedEvent> kafkaTemplate;
+	
+	public BrandUpdateProducer(NewTopic topic, KafkaTemplate<String, BrandUpdatedEvent> kafkaTemplate) {
+		this.topic = topic;
+		this.kafkaTemplate = kafkaTemplate;
+	}
+	
+	public void sendMessage(BrandUpdatedEvent brandUpdatedEvent) {
+		LOGGER.info(String.format("Brand deleted event => %s", brandUpdatedEvent.toString()));
+		
+		Message<BrandDeletedEvent> message = MessageBuilder
+				.withPayload(brandUpdatedEvent)
+				.setHeader(KafkaHeaders.TOPIC, topic.name()).build();
+		
+		kafkaTemplate.send(message); 
+	}
+}

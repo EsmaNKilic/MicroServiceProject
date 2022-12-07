@@ -1,0 +1,36 @@
+package com.kodlamaio.inventoryservice.kafka.producer.inventories.model;
+
+import org.apache.kafka.clients.admin.NewTopic;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.KafkaHeaders;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.stereotype.Service;
+
+import com.kodlamaio.common.events.inventories.model.ModelUpdatedEvent;
+
+@Service
+public class ModelUpdateProducer {
+	private static final Logger LOGGER = LoggerFactory.getLogger(ModelUpdateProducer.class);
+
+	private NewTopic topic;
+	
+	private KafkaTemplate<String, ModelUpdatedEvent> kafkaTemplate;
+	
+	public ModelUpdateProducer(NewTopic topic, KafkaTemplate<String, ModelUpdatedEvent> kafkaTemplate) {
+		this.topic = topic;
+		this.kafkaTemplate = kafkaTemplate;
+	}
+	
+	public void sendMessage(ModelUpdatedEvent modelUpdatedEvent) {
+		LOGGER.info(String.format("Model updated event => %s", modelUpdatedEvent.toString()));
+		
+		Message<ModelUpdatedEvent> message = MessageBuilder
+				.withPayload(modelUpdatedEvent)
+				.setHeader(KafkaHeaders.TOPIC, topic.name()).build();
+		
+		kafkaTemplate.send(message); 
+	}
+}

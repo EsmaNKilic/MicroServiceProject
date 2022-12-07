@@ -1,0 +1,14 @@
+package com.kodlamaio.inventoryservice.kafka.producer.inventories.model;
+
+import com.kodlamaio.inventoryservice.kafka.producer.inventories.brand.BrandDeletedEvent;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class ModelDeletedEvent {
+	private String modelId;
+}

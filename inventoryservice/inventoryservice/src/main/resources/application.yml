@@ -33,6 +33,7 @@ spring:
       bootstrap-servers: localhost:9092
       group-id: inventory
       group-id2: inventory2
+      group-id3: inventory3
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       properties:
         spring:
@@ -43,5 +44,6 @@ spring:
     topic:
       name: rental_topics
       update: rental_topics_update
+      delete: rental_topics_delete
   zipkin:
     base-url: http://localhost:9411

@@ -1,0 +1,5 @@
+package com.kodlamaio.inventoryservice.kafka.consumer;
+
+public class RentalConsumer {
+
+}

@@ -1,0 +1,111 @@
+package com.kodlamaio.inventoryservice.kafka.producer.inventories;
+
+import org.apache.kafka.clients.admin.NewTopic;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.KafkaHeaders;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.stereotype.Service;
+
+import com.kodlamaio.common.events.inventories.InventoryCreatedEvent;
+import com.kodlamaio.common.events.inventories.brand.BrandDeletedEvent;
+import com.kodlamaio.common.events.inventories.brand.BrandUpdatedEvent;
+import com.kodlamaio.common.events.inventories.car.CarDeletedEvent;
+import com.kodlamaio.common.events.inventories.car.CarUpdatedEvent;
+import com.kodlamaio.common.events.inventories.model.ModelDeletedEvent;
+import com.kodlamaio.common.events.inventories.model.ModelUpdatedEvent;
+
+@Service
+public class InventoryProducer 
+{
+	private static final Logger LOGGER = LoggerFactory.getLogger(InventoryCreateProducer.class);
+
+	private NewTopic topic;
+	
+	private KafkaTemplate<String, Object> kafkaTemplate;
+	
+	public InventoryProducer(NewTopic topic, KafkaTemplate<String, Object> kafkaTemplate) {
+		this.topic = topic;
+		this.kafkaTemplate = kafkaTemplate;
+	}
+	
+	// INVENTORY
+	
+	public void sendMessage(InventoryCreatedEvent inventoryCreatedEvent) {
+		LOGGER.info(String.format("Inventory created event => %s", inventoryCreatedEvent.toString()));
+		
+		Message<InventoryCreatedEvent> message = MessageBuilder
+				.withPayload(inventoryCreatedEvent)
+				.setHeader(KafkaHeaders.TOPIC, topic.name()).build();
+		
+		kafkaTemplate.send(message); 
+	}
+	
+	// CAR
+	
+	public void sendMessage(CarUpdatedEvent carUpdatedEvent) {
+		LOGGER.info(String.format("Car updated event => %s", carUpdatedEvent.toString()));
+		
+		Message<CarUpdatedEvent> message = MessageBuilder
+				.withPayload(carUpdatedEvent)
+				.setHeader(KafkaHeaders.TOPIC, topic.name()).build();
+		
+		kafkaTemplate.send(message); 
+	}
+	
+	public void sendMessage(CarDeletedEvent carDeletedEvent) {
+		LOGGER.info(String.format("Car deleted event => %s", carDeletedEvent.toString()));
+		
+		Message<CarDeletedEvent> message = MessageBuilder
+				.withPayload(carDeletedEvent)
+				.setHeader(KafkaHeaders.TOPIC, topic.name()).build();
+		
+		kafkaTemplate.send(message); 
+	}
+	
+	// BRAND
+	
+	public void sendMessage(BrandUpdatedEvent brandUpdatedEvent) {
+		LOGGER.info(String.format("Brand updated event => %s", brandUpdatedEvent.toString()));
+		
+		Message<BrandUpdatedEvent> message = MessageBuilder
+				.withPayload(brandUpdatedEvent)
+				.setHeader(KafkaHeaders.TOPIC, topic.name()).build();
+		
+		kafkaTemplate.send(message); 
+	}
+	
+	public void sendMessage(BrandDeletedEvent brandDeletedEvent) {
+		LOGGER.info(String.format("Brand deleted event => %s", brandDeletedEvent.toString()));
+		
+		Message<BrandDeletedEvent> message = MessageBuilder
+				.withPayload(brandDeletedEvent)
+				.setHeader(KafkaHeaders.TOPIC, topic.name()).build();
+		
+		kafkaTemplate.send(message); 
+	}
+	
+	// MODEL
+	
+	public void sendMessage(ModelUpdatedEvent modelUpdatedEvent) {
+		LOGGER.info(String.format("Model updated event => %s", modelUpdatedEvent.toString()));
+		
+		Message<ModelUpdatedEvent> message = MessageBuilder
+				.withPayload(modelUpdatedEvent)
+				.setHeader(KafkaHeaders.TOPIC, topic.name()).build();
+		
+		kafkaTemplate.send(message); 
+	}
+	
+	public void sendMessage(ModelDeletedEvent modelDeletedEvent) {
+		LOGGER.info(String.format("Model deleted event => %s", modelDeletedEvent.toString()));
+		
+		Message<ModelDeletedEvent> message = MessageBuilder
+				.withPayload(modelDeletedEvent)
+				.setHeader(KafkaHeaders.TOPIC, topic.name()).build();
+		
+		kafkaTemplate.send(message); 
+	}
+}

@@ -1,5 +1,0 @@
-package com.kodlamaio.inventoryservice.business.requests.Update;
-
-public class UpdateCarRequest {
-
-}

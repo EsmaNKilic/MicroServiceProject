@@ -1,0 +1,5 @@
+package com.kodlamaio.inventoryservice.kafka.producer.inventories.brand;
+
+public class BrandUpdateProducer {
+
+}

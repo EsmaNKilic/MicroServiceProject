@@ -1,0 +1,5 @@
+package com.kodlamaio.inventoryservice.kafka.producer.inventories.model;
+
+public class BrandUpdatedEvent {
+
+}

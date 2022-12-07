@@ -6,7 +6,9 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.kodlama.paymentService.business.requests.CheckPaymentRequest;
 import com.kodlama.paymentService.business.abstracts.PaymentService;
+import com.kodlama.paymentService.business.abstracts.PosService;
 import com.kodlama.paymentService.business.requests.CreatePaymentRequest;
 import com.kodlama.paymentService.business.requests.UpdatePaymentRequest;
 import com.kodlama.paymentService.business.responses.CreatePaymentResponse;
@@ -26,6 +28,7 @@ public class PaymentManager implements PaymentService{
 
 	private PaymentRepository paymentRepository;
 	private ModelMapperService modelMapperService;
+	private PosService posService;
 	
 	@Override
 	public List<GetAllPaymentResponse> getAll() {
@@ -92,9 +95,35 @@ public class PaymentManager implements PaymentService{
 		
 	}
 
-	
+	@Override
+    public void checkIfPaymentSuccess(CheckPaymentRequest checkPaymentRequest) {
+        checkPayment(checkPaymentRequest);
+    }
+
 	
 	// CONTROLS
+	
+	
+	private void checkPayment(CheckPaymentRequest checkPaymentRequest) {
+        if (!paymentRepository.existsByAllInformation(
+        		checkPaymentRequest.getNameOnCard(),
+        		checkPaymentRequest.getCardNumber(),
+        		checkPaymentRequest.getCardExpirationYear(),
+        		checkPaymentRequest.getCardExpirationMonth(),
+        		checkPaymentRequest.getCvv())) {
+            throw new BusinessException("NOT A VALID PAYMENT");
+        } else {
+            double balance = paymentRepository.findByCardNumber(checkPaymentRequest.getCardNumber()).getBalance();
+            if (balance < checkPaymentRequest.getPrice()) {
+                throw new BusinessException("NOT ENOUGH MONEY");
+            } else {
+                posService.pay();
+                Payment payment = paymentRepository.findByCardNumber(checkPaymentRequest.getCardNumber());
+                payment.setBalance(balance - checkPaymentRequest.getPrice());
+                paymentRepository.save(payment);
+            }
+        }
+    }
 	
 	
 	private void checkIfPaymentExists(String id) {
@@ -114,4 +143,5 @@ public class PaymentManager implements PaymentService{
 		throw new BusinessException("CARD NUMBER ALREADY EXIST");
 		
 	}
+
 }

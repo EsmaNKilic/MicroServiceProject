@@ -2,6 +2,7 @@ package com.kodlama.paymentService.business.abstracts;
 
 import java.util.List;
 
+import com.kodlama.paymentService.business.requests.CheckPaymentRequest;
 import com.kodlama.paymentService.business.requests.CreatePaymentRequest;
 import com.kodlama.paymentService.business.requests.UpdatePaymentRequest;
 import com.kodlama.paymentService.business.responses.CreatePaymentResponse;
@@ -16,6 +17,6 @@ public interface PaymentService {
 	CreatePaymentResponse add(CreatePaymentRequest creatPaymentRequest);
 	UpdatePaymentResponse update(UpdatePaymentRequest updatePaymentRequest);
 	void delete(String id);
-	//void checkIfPaymentSuccess();
+	void checkIfPaymentSuccess(CheckPaymentRequest checkPaymentRequest);
 	
 }
