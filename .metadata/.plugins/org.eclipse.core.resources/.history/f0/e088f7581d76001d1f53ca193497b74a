@@ -1,0 +1,5 @@
+package com.kodlama.filterService.business.responses;
+
+public class GetFilterResponse {
+
+}

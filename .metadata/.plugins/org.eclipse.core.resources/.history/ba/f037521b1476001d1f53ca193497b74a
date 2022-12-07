@@ -1,0 +1,5 @@
+package com.kodlama.invoiceService.clients;
+
+public interface CarClient {
+
+}

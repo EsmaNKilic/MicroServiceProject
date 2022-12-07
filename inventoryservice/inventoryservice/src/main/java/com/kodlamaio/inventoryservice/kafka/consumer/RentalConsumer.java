@@ -42,7 +42,7 @@ private static final Logger LOGGER = LoggerFactory.getLogger(RentalConsumer.clas
 		
 		carService.updateCarState(1);
 		event.getOldCarId();
-	    carService.updateCarState(3);
+	    carService.updateCarState(3); 
 	    event.getNewCarId();
 		
 		LOGGER.info(String.format("Order event received in stock service => %s", event.toString()));

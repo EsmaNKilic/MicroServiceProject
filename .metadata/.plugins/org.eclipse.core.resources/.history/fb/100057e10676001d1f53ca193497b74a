@@ -1,0 +1,12 @@
+active: ${PROFILE}
+application: ''
+cloud: ''
+config: ''
+default-label: master
+git: ''
+name: config-server
+port: 8888
+profiles: ''
+server: ''
+spring: ''
+uri: https://github.com/EsmaNKilic/microservice-config-server

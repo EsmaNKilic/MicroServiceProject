@@ -1,29 +1,165 @@
 package com.kodlama.filterService.business.concretes;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+
 import com.kodlama.filterService.business.abstracts.CarFilterService;
-import com.kodlama.filterService.core.results.Result;
-import com.kodlama.filterService.core.results.SuccessResult;
+import com.kodlama.filterService.business.responses.GetAllFilterResponse;
 import com.kodlama.filterService.dataAccess.CarFilterRepository;
 import com.kodlama.filterService.entities.CarFilter;
+import com.kodlamaio.common.utilities.mapping.ModelMapperService;
 
+import lombok.AllArgsConstructor;
+
+@Service
+@AllArgsConstructor
 public class CarFilterManager implements CarFilterService{
 
-	private CarFilterRepository carFilterRepository;
-	
-	@Override
-	public Result add(CarFilter carFilter) {
-		
-		carFilterRepository.save(carFilter);
-		
-		return new SuccessResult();
-	}
+	 private  CarFilterRepository carFilterRepository;
+	 private  ModelMapperService modelMapperService;
 
-	@Override
-	public Result update(CarFilter carFilter) {
-		
-		carFilterRepository.save(carFilter);
-		
-		return new SuccessResult();
-	}
+	    @Override
+	    public List<GetAllFilterResponse> getAll() {
+	    	
+	        List<CarFilter> filters = carFilterRepository.findAll();
+	        
+	        List<GetAllFilterResponse> response = filters.stream()
+	                .map(carFilter -> modelMapperService.forResponse()
+	                .map(carFilter, GetAllFilterResponse.class)).collect(Collectors.toList());
 
+	        return response;
+	    }
+
+	    @Override
+	    public List<GetAllFilterResponse> getByBrandName(String brandName) {
+	    	
+	        List<CarFilter> filters = carFilterRepository.findByBrandNameIgnoreCase(brandName);
+	        
+	        List<GetAllFilterResponse> response = filters.stream()
+	                .map(carFilter -> modelMapperService.forResponse()
+	                .map(carFilter, GetAllFilterResponse.class)).collect(Collectors.toList());
+
+	        return response;
+	    }
+
+	    @Override
+	    public List<GetAllFilterResponse> getByModelName(String modelName) {
+	    	
+	        List<CarFilter> filters = carFilterRepository.findByModelNameIgnoreCase(modelName);
+	        
+	        List<GetAllFilterResponse> response = filters.stream()
+	                .map(carFilter -> modelMapperService.forResponse()
+	                .map(carFilter, GetAllFilterResponse.class)).collect(Collectors.toList());
+
+	        return response;
+	    }
+
+	    @Override
+	    public List<GetAllFilterResponse> getByPlate(String plate) {
+	    	
+	        List<CarFilter> filters = carFilterRepository.findByPlateIgnoreCase(plate);
+	        
+	        List<GetAllFilterResponse> response = filters.stream()
+	                .map(filter -> modelMapperService.forResponse()
+	                .map(filter, GetAllFilterResponse.class)).collect(Collectors.toList());
+
+	        return response;
+	    }
+
+	    @Override
+	    public List<GetAllFilterResponse> searchByPlate(String plate) {
+	    	
+	        List<CarFilter> filters = carFilterRepository.findByPlateContainingIgnoreCase(plate);
+	        
+	        List<GetAllFilterResponse> response = filters.stream()
+	                .map(filter -> modelMapperService.forResponse()
+	                .map(filter, GetAllFilterResponse.class)).collect(Collectors.toList());
+
+	        return response;
+	    }
+
+	    @Override
+	    public List<GetAllFilterResponse> searchByBrandName(String brandName) {
+	    	
+	        List<CarFilter> filters = carFilterRepository.findByBrandNameContainingIgnoreCase(brandName);
+	        
+	        List<GetAllFilterResponse> response = filters.stream()
+	                .map(filter -> modelMapperService.forResponse()
+	                .map(filter, GetAllFilterResponse.class)).collect(Collectors.toList());
+
+	        return response;
+	    }
+
+	    @Override
+	    public List<GetAllFilterResponse> searchByModelName(String modelName) {
+	    	
+	        List<CarFilter> filters = carFilterRepository.findByModelNameContainingIgnoreCase(modelName);
+	        
+	        List<GetAllFilterResponse> response = filters.stream()
+	                .map(filter -> modelMapperService.forResponse()
+	                .map(filter, GetAllFilterResponse.class)).collect(Collectors.toList());
+
+	        return response;
+	    }
+
+	    @Override
+	    public List<GetAllFilterResponse> getByModelYear(int modelYear) {
+	    	
+	        List<CarFilter> filters = carFilterRepository.findByModelYear(modelYear);
+	        
+	        List<GetAllFilterResponse> response = filters.stream()
+	                .map(filter -> modelMapperService.forResponse()
+	                .map(filter, GetAllFilterResponse.class)).collect(Collectors.toList());
+
+	        return response;
+	    }
+
+	    @Override
+	    public List<GetAllFilterResponse> getByState(int state) {
+	    	
+	        List<CarFilter> filters = carFilterRepository.findByState(state);
+	        
+	        List<GetAllFilterResponse> response = filters.stream()
+	                .map(filter -> modelMapperService.forResponse()
+	                .map(filter, GetAllFilterResponse.class)).collect(Collectors.toList());
+
+	        return response;
+	    }
+
+	    @Override
+	    public CarFilter getByCarId(String id) {
+	        return carFilterRepository.findByCarId(id);
+	    }
+
+	    @Override
+	    public List<CarFilter> getByModelId(String modelId) {
+	        return carFilterRepository.findByModelId(modelId);
+	    }
+
+	    @Override
+	    public List<CarFilter> getByBrandId(String brandId) {
+	        return carFilterRepository.findByBrandId(brandId);
+	    }
+
+	    @Override
+	    public void save(CarFilter carFilter) {
+	    	carFilterRepository.save(carFilter);
+	    }
+
+	    @Override
+	    public void delete(String id) {
+	    	carFilterRepository.deleteByCarId(id);
+	    }
+
+	    @Override
+	    public void deleteAllByBrandId(String brandId) {
+	    	carFilterRepository.deleteAllByBrandId(brandId);
+	    }
+
+	    @Override
+	    public void deleteAllByModelId(String modelId) {
+	    	carFilterRepository.deleteAllByModelId(modelId);
+	    }
 }

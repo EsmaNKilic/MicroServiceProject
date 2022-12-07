@@ -95,6 +95,13 @@ public class InvoiceManager implements InvoiceService{
 		
 	}
 	
+	@Override
+	public void createInvoice(Invoice invoice) {
+		
+		invoice.setId(UUID.randomUUID().toString());
+		
+		invoiceRepository.save(invoice);
+	}
 	
 	
 	// CONTROLS

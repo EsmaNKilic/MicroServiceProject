@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kodlama.rentalService.business.abstracts.RentalService;
+import com.kodlama.rentalService.business.requests.CreatePaymentRequest;
 import com.kodlama.rentalService.business.requests.CreateRentalRequest;
 import com.kodlama.rentalService.business.requests.UpdateRentalRequest;
 import com.kodlama.rentalService.business.response.CreateRentalResponse;
@@ -53,11 +55,23 @@ public class RentalsController {
 	}
 	
 	@PostMapping
-	public CreateRentalResponse add(@RequestBody CreateRentalRequest createRentalRequest) {
-		
-		logger.info("Adding new rental");
-		
-		return this.rentalService.add(createRentalRequest);
+	public CreateRentalResponse add(
+			@RequestBody CreateRentalRequest createRentalRequest,
+			@RequestParam String cardNumber,
+			@RequestParam String nameOnCard,
+			@RequestParam int cardExpirationYear,
+            @RequestParam int cardExpirationMonth,
+            @RequestParam String cvv) {
+         
+            logger.info("Adding new rental");
+            
+	        CreatePaymentRequest creatPaymentRequest = new CreatePaymentRequest(
+	        		cardNumber,
+	                nameOnCard,
+	                cardExpirationYear,
+	                cardExpirationMonth,
+	                cvv);
+	        return this.rentalService.add(createRentalRequest, creatPaymentRequest);
 	}
 	
 	@PutMapping

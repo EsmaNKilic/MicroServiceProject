@@ -30,5 +30,5 @@ public class CarFilter {
 
 	private String carBrandName;
 	
-	private String carState;
+	private int carState;
 }

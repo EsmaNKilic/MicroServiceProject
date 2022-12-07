@@ -1,0 +1,5 @@
+package com.kodlama.invoiceService.business.responses;
+
+public class GetCarResponse {
+
+}

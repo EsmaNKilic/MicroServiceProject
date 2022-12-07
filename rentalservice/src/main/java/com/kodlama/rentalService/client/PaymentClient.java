@@ -10,7 +10,7 @@ public interface PaymentClient {
 	
     @RequestMapping(method = RequestMethod.POST, value = "payment/api/payments/check")
     
-    void checkIfPaymentSuccessful(
+    void checkIfPaymentSuccess(
             @RequestParam String cardNumber,
             @RequestParam String nameOnCard,
             @RequestParam int cardExpirationYear,

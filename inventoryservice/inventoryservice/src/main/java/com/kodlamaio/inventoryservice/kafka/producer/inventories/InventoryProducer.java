@@ -16,6 +16,9 @@ import com.kodlamaio.common.events.inventories.car.CarDeletedEvent;
 import com.kodlamaio.common.events.inventories.car.CarUpdatedEvent;
 import com.kodlamaio.common.events.inventories.model.ModelDeletedEvent;
 import com.kodlamaio.common.events.inventories.model.ModelUpdatedEvent;
+import com.kodlamaio.common.events.rentals.CarRentalCreatedEvent;
+import com.kodlamaio.common.events.rentals.CarRentalDeletedEvent;
+import com.kodlamaio.common.events.rentals.CarRentalUpdatedEvent;
 
 @Service
 public class InventoryProducer 
@@ -109,4 +112,35 @@ public class InventoryProducer
 		kafkaTemplate.send(message); 
 	}
 
+	// RENTALS
+	
+	public void sendMessage(CarRentalCreatedEvent carRentalCreatedEvent) {
+		LOGGER.info(String.format("Car rental created event => %s", carRentalCreatedEvent.toString()));
+		
+		Message<CarRentalCreatedEvent> message = MessageBuilder
+				.withPayload(carRentalCreatedEvent)
+				.setHeader(KafkaHeaders.TOPIC, topic.name()).build();
+		
+		kafkaTemplate.send(message); 
+	}
+	
+	public void sendMessage(CarRentalUpdatedEvent carRentalUpdatedEvent) {
+		LOGGER.info(String.format("Car rental updated event => %s", carRentalUpdatedEvent.toString()));
+		
+		Message<CarRentalUpdatedEvent> message = MessageBuilder
+				.withPayload(carRentalUpdatedEvent)
+				.setHeader(KafkaHeaders.TOPIC, topic.name()).build();
+		
+		kafkaTemplate.send(message); 
+	}
+	
+	public void sendMessage(CarRentalDeletedEvent carRentalDeletedEvent) {
+		LOGGER.info(String.format("Car rental deleted event => %s", carRentalDeletedEvent.toString()));
+		
+		Message<CarRentalDeletedEvent> message = MessageBuilder
+				.withPayload(carRentalDeletedEvent)
+				.setHeader(KafkaHeaders.TOPIC, topic.name()).build();
+		
+		kafkaTemplate.send(message); 
+	}
 }

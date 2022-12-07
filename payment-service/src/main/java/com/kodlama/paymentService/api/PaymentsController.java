@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kodlama.paymentService.business.abstracts.PaymentService;
-import com.kodlama.paymentService.business.requests.CheckPaymentRequest;
+import com.kodlama.paymentService.business.requests.PaymentRequest;
 import com.kodlama.paymentService.business.requests.CreatePaymentRequest;
 import com.kodlama.paymentService.business.requests.UpdatePaymentRequest;
 import com.kodlama.paymentService.business.responses.CreatePaymentResponse;
@@ -63,7 +63,7 @@ public class PaymentsController {
             @RequestParam int cardExpirationMonth,
             @RequestParam String cvv,
             @RequestParam double price) {
-		CheckPaymentRequest checkPaymentRequest = new CheckPaymentRequest(
+		PaymentRequest checkPaymentRequest = new PaymentRequest(
 				cardNumber,
                 nameOnCard,
                 cardExpirationYear,

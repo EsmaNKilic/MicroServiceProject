@@ -1,0 +1,5 @@
+package com.kodlama.filterService.kafka.consumer.inventories;
+
+public class InventoryConsumer {
+
+}

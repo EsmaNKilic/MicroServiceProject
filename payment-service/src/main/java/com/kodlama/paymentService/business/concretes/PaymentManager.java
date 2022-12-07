@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.kodlama.paymentService.business.requests.CheckPaymentRequest;
+import com.kodlama.paymentService.business.requests.PaymentRequest;
 import com.kodlama.paymentService.business.abstracts.PaymentService;
 import com.kodlama.paymentService.business.abstracts.PosService;
 import com.kodlama.paymentService.business.requests.CreatePaymentRequest;
@@ -96,7 +96,7 @@ public class PaymentManager implements PaymentService{
 	}
 
 	@Override
-    public void checkIfPaymentSuccess(CheckPaymentRequest checkPaymentRequest) {
+    public void checkIfPaymentSuccess(PaymentRequest checkPaymentRequest) {
         checkPayment(checkPaymentRequest);
     }
 
@@ -104,7 +104,7 @@ public class PaymentManager implements PaymentService{
 	// CONTROLS
 	
 	
-	private void checkPayment(CheckPaymentRequest checkPaymentRequest) {
+	private void checkPayment(PaymentRequest checkPaymentRequest) {
         if (!paymentRepository.existsByAllInformation(
         		checkPaymentRequest.getNameOnCard(),
         		checkPaymentRequest.getCardNumber(),
