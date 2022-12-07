@@ -2,6 +2,8 @@ package com.kodlama.invoiceService.api;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,12 +42,12 @@ public class InvoicesController {
 	}
 	
 	@PostMapping
-	public CreateInvoiceResponse add(@RequestBody CreateInvoiceRequest createInvoiceRequest) {
+	public CreateInvoiceResponse add(@Valid @RequestBody CreateInvoiceRequest createInvoiceRequest) {
 		return this.invoiceService.add(createInvoiceRequest);
 	}
 	
 	@PutMapping
-	public UpdateInvoiceResponse update(@RequestBody UpdateInvoiceRequest updateInvoiceRequest) {
+	public UpdateInvoiceResponse update(@Valid @RequestBody UpdateInvoiceRequest updateInvoiceRequest) {
 		return this.invoiceService.update(updateInvoiceRequest);
 	}
 	

@@ -26,7 +26,7 @@ public class RentalConsumer {
 	    this.carClient = carClient;
 	}
 	
-	@KafkaListener (topics = "${spring.kafka.topic.name}", groupId = "${spring.kafka.consumer.group-id}")
+	@KafkaListener (topics = "${spring.kafka.topic.name}", groupId = "paymentrecieved")
 	
 	public void consume(PaymentReceivedEvent event) {
 		

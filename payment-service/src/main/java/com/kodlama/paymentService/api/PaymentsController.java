@@ -2,6 +2,8 @@ package com.kodlama.paymentService.api;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,12 +43,12 @@ public class PaymentsController {
 	}
 	
 	@PostMapping
-	public CreatePaymentResponse add(@RequestBody CreatePaymentRequest createPaymentRequest) {
+	public CreatePaymentResponse add(@Valid @RequestBody CreatePaymentRequest createPaymentRequest) {
 		return this.paymentService.add(createPaymentRequest);
 	}
 	
 	@PutMapping
-	public UpdatePaymentResponse update(@RequestBody UpdatePaymentRequest updatePaymentRequest) {
+	public UpdatePaymentResponse update(@Valid @RequestBody UpdatePaymentRequest updatePaymentRequest) {
 		return this.paymentService.update(updatePaymentRequest);
 	}
 	

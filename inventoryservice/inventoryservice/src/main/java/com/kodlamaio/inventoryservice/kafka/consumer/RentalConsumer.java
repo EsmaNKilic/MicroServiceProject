@@ -24,7 +24,7 @@ private static final Logger LOGGER = LoggerFactory.getLogger(RentalConsumer.clas
 	    this.inventoryProducer = inventoryProducer;
 	}
 	
-	@KafkaListener (topics = "${spring.kafka.topic.name}", groupId = "${spring.kafka.consumer.group-id}")
+	@KafkaListener (topics = "${spring.kafka.topic.name}", groupId = "rentalcreated")
 	
 	public void consume(RentalCreatedEvent event) {
 		
@@ -36,7 +36,7 @@ private static final Logger LOGGER = LoggerFactory.getLogger(RentalConsumer.clas
 		// save the order event into the database
 	}
 	
-	@KafkaListener (topics = "${spring.kafka.topic.update}", groupId = "${spring.kafka.consumer.group-id2}")
+	@KafkaListener (topics = "${spring.kafka.topic.name}", groupId = "rentalupdated")
 	
 	public void consume(RentalUpdatedEvent event) {
 		
@@ -49,7 +49,7 @@ private static final Logger LOGGER = LoggerFactory.getLogger(RentalConsumer.clas
 			
 	}
 	
-	@KafkaListener (topics = "${spring.kafka.topic.delete}", groupId = "${spring.kafka.consumer.group-id3}")
+	@KafkaListener (topics = "${spring.kafka.topic.name}", groupId = "rentaldeleted")
 	
 	public void consume(RentalDeletedEvent event) {
 		

@@ -2,6 +2,8 @@ package com.kodlama.rentalService.api;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -56,7 +58,7 @@ public class RentalsController {
 	
 	@PostMapping
 	public CreateRentalResponse add(
-			@RequestBody CreateRentalRequest createRentalRequest,
+			@Valid @RequestBody CreateRentalRequest createRentalRequest,
 			@RequestParam String cardNumber,
 			@RequestParam String nameOnCard,
 			@RequestParam int cardExpirationYear,
@@ -75,7 +77,7 @@ public class RentalsController {
 	}
 	
 	@PutMapping
-	public UpdateRentalResponse update(@RequestBody UpdateRentalRequest updateRentalRequest) {
+	public UpdateRentalResponse update(@Valid @RequestBody UpdateRentalRequest updateRentalRequest) {
 		return this.rentalService.update(updateRentalRequest);
 	}
 	

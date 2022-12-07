@@ -31,7 +31,7 @@ public class InventoryConsumer {
         this.modelMapperService = modelMapperService;
     }
 
-    @KafkaListener(topics = "${spring.kafka.topic.name}", groupId = "inventory-create")
+    @KafkaListener(topics = "${spring.kafka.topic.name}", groupId = "inventorycreated")
     
     public void consume(InventoryCreatedEvent event) {
     	
@@ -42,7 +42,7 @@ public class InventoryConsumer {
         LOGGER.info("Inventory created event consumed: {}", event);
     }
 
-    @KafkaListener(topics = "${spring.kafka.topic.name}", groupId = "car-delete")
+    @KafkaListener(topics = "${spring.kafka.topic.name}", groupId = "cardeleted")
     
     public void consume(CarDeletedEvent event) {
     	
@@ -51,7 +51,7 @@ public class InventoryConsumer {
         LOGGER.info("Car deleted event consumed: {}", event);
     }
 
-    @KafkaListener(topics = "${spring.kafka.topic.name}", groupId = "car-update")
+    @KafkaListener(topics = "${spring.kafka.topic.name}", groupId = "carupdated")
     
     public void consume(CarUpdatedEvent event) {
     	
@@ -66,7 +66,7 @@ public class InventoryConsumer {
         LOGGER.info("Car updated event consumed: {}", event);
     }
 
-    @KafkaListener(topics = "${spring.kafka.topic.name}", groupId = "brand-delete")
+    @KafkaListener(topics = "${spring.kafka.topic.name}", groupId = "branddeleted")
     
     public void consume(BrandDeletedEvent event) {
     	
@@ -75,7 +75,7 @@ public class InventoryConsumer {
         LOGGER.info("Brand deleted event consumed: {}", event);
     }
 
-    @KafkaListener(topics = "${spring.kafka.topic.name}", groupId = "brand-update")
+    @KafkaListener(topics = "${spring.kafka.topic.name}", groupId = "brandupdated")
     
     public void consume(BrandUpdatedEvent event) {
     	
@@ -88,7 +88,7 @@ public class InventoryConsumer {
         LOGGER.info("Brand updated event consumed: {}", event);
     }
 
-    @KafkaListener(topics = "${spring.kafka.topic.name}", groupId = "model-delete")
+    @KafkaListener(topics = "${spring.kafka.topic.name}", groupId = "modeldeleted")
     
     public void consume(ModelDeletedEvent event) {
     	
@@ -97,7 +97,7 @@ public class InventoryConsumer {
         LOGGER.info("Model deleted event consumed: {}", event);
     }
 
-    @KafkaListener(topics = "${spring.kafka.topic.name}", groupId = "model-update")
+    @KafkaListener(topics = "${spring.kafka.topic.name}", groupId = "modelupdated")
     
     public void consume(ModelUpdatedEvent event) {
     	
@@ -114,7 +114,7 @@ public class InventoryConsumer {
         LOGGER.info("Model updated event consumed: {}", event);
     }
 
-    @KafkaListener(topics = "${spring.kafka.topic.name}", groupId = "car-rental-create")
+    @KafkaListener(topics = "${spring.kafka.topic.name}", groupId = "carrentalcreated")
     
     public void consume(CarRentalCreatedEvent event) {
     	
@@ -127,7 +127,7 @@ public class InventoryConsumer {
         LOGGER.info("Car rental created event consumed: {}", event);
     }
 
-    @KafkaListener(topics = "${spring.kafka.topic.name}", groupId = "car-rental-update")
+    @KafkaListener(topics = "${spring.kafka.topic.name}", groupId = "carrentalupdated")
     
     public void consume(CarRentalUpdatedEvent event) {
     	
@@ -144,7 +144,7 @@ public class InventoryConsumer {
         LOGGER.info("Car rental updated event consumed: {}", event);
     }
 
-    @KafkaListener(topics = "${spring.kafka.topic.name}", groupId = "car-rental-delete")
+    @KafkaListener(topics = "${spring.kafka.topic.name}", groupId = "carrentaldeleted")
     
     public void consume(CarRentalDeletedEvent event) {
     	
