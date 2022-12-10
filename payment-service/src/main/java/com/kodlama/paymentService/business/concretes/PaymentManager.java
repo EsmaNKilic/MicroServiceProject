@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.kodlama.paymentService.business.requests.PaymentRequest;
 import com.kodlama.paymentService.business.abstracts.PaymentService;
 import com.kodlama.paymentService.business.abstracts.PosService;
 import com.kodlama.paymentService.business.requests.CreatePaymentRequest;
@@ -17,6 +16,7 @@ import com.kodlama.paymentService.business.responses.GetPaymentResponse;
 import com.kodlama.paymentService.business.responses.UpdatePaymentResponse;
 import com.kodlama.paymentService.dataAccess.PaymentRepository;
 import com.kodlama.paymentService.entities.Payment;
+import com.kodlamaio.common.CreateRentalPaymentRequest;
 import com.kodlamaio.common.utilities.exceptions.BusinessException;
 import com.kodlamaio.common.utilities.mapping.ModelMapperService;
 
@@ -96,30 +96,30 @@ public class PaymentManager implements PaymentService{
 	}
 
 	@Override
-    public void checkIfPaymentSuccess(PaymentRequest checkPaymentRequest) {
-        checkPayment(checkPaymentRequest);
+    public void checkIfPaymentSuccess(CreateRentalPaymentRequest createRentalPaymentRequest) {
+        checkPayment(createRentalPaymentRequest);
     }
-
+ 
 	
 	// CONTROLS
 	
 	
-	private void checkPayment(PaymentRequest checkPaymentRequest) {
-        if (!paymentRepository.existsByAllInformation(
-        		checkPaymentRequest.getNameOnCard(),
-        		checkPaymentRequest.getCardNumber(),
-        		checkPaymentRequest.getCardExpirationYear(),
-        		checkPaymentRequest.getCardExpirationMonth(),
-        		checkPaymentRequest.getCvv())) {
+	private void checkPayment(CreateRentalPaymentRequest createRentalPaymentRequest) {
+        if (!paymentRepository.existsByNameOnCardAndCardNumberAndCardExpirationYearAndCardExpirationMonthAndCvv(
+        		createRentalPaymentRequest.getNameOnCard(),
+        		createRentalPaymentRequest.getCardNumber(),
+        		createRentalPaymentRequest.getCardExpirationYear(),
+        		createRentalPaymentRequest.getCardExpirationMonth(),
+        		createRentalPaymentRequest.getCvv())) {
             throw new BusinessException("NOT A VALID PAYMENT");
         } else {
-            double balance = paymentRepository.findByCardNumber(checkPaymentRequest.getCardNumber()).getBalance();
-            if (balance < checkPaymentRequest.getPrice()) {
+            double balance = paymentRepository.findByCardNumber(createRentalPaymentRequest.getCardNumber()).getBalance();
+            if (balance < createRentalPaymentRequest.getPrice()) {
                 throw new BusinessException("NOT ENOUGH MONEY");
             } else {
                 posService.pay();
-                Payment payment = paymentRepository.findByCardNumber(checkPaymentRequest.getCardNumber());
-                payment.setBalance(balance - checkPaymentRequest.getPrice());
+                Payment payment = paymentRepository.findByCardNumber(createRentalPaymentRequest.getCardNumber());
+                payment.setBalance(balance - createRentalPaymentRequest.getPrice());
                 paymentRepository.save(payment);
             }
         }

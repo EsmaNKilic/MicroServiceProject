@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.kodlamaio.common.events.inventories.brand.BrandDeletedEvent;
+import com.kodlamaio.common.events.inventories.brand.BrandUpdatedEvent;
 import com.kodlamaio.common.utilities.exceptions.BusinessException;
 import com.kodlamaio.common.utilities.mapping.ModelMapperService;
 import com.kodlamaio.inventoryservice.business.abstracts.BrandService;
@@ -17,6 +19,7 @@ import com.kodlamaio.inventoryservice.business.responses.GetAll.GetAllBrandRespo
 import com.kodlamaio.inventoryservice.business.responses.Update.UpdateBrandResponse;
 import com.kodlamaio.inventoryservice.dataAccess.BrandRepository;
 import com.kodlamaio.inventoryservice.entities.Brand;
+import com.kodlamaio.inventoryservice.kafka.producer.inventories.InventoryProducer;
 
 import lombok.AllArgsConstructor;
 
@@ -26,6 +29,7 @@ public class BrandManager implements BrandService {
 	
 	private BrandRepository brandRepository;
 	private ModelMapperService modelMapperService;
+	private InventoryProducer inventoryProducer;
 
 	@Override
 	public List<GetAllBrandResponse> getAll() {
@@ -85,9 +89,20 @@ public class BrandManager implements BrandService {
 		UpdateBrandResponse updateBrandResponse = this.modelMapperService.forResponse()
 				.map(brand, UpdateBrandResponse.class);
 		
+		updateMongo(updateBrandRequest.getId(), brand.getName());
+		
 		return updateBrandResponse;
 	}
 
+	private void updateMongo(String id, String name) {
+		
+        BrandUpdatedEvent event = new BrandUpdatedEvent();
+        
+        event.setId(id);
+        event.setName(name);
+        
+        inventoryProducer.sendMessage(event);
+    }
 
 	@Override
 	public void delete(String id) {
@@ -95,14 +110,26 @@ public class BrandManager implements BrandService {
 		checkIfBrandExistsById(id);
 		
 		this.brandRepository.deleteById(id);
+		
+		deleteMongo(id);
 	}
 	
+	private void deleteMongo(String id) {
+		
+        BrandDeletedEvent event = new BrandDeletedEvent();
+        
+        event.setBrandId(id);
+        
+        inventoryProducer.sendMessage(event);
+    }
 	
 	// CONTROLS
 	
 
 	private void checkIfBrandExistsByName(String name) {
+		
 		if(brandRepository.existsByName(name)) {
+			
 		    throw new BusinessException("BRAND EXISTS");
 		}
 	}

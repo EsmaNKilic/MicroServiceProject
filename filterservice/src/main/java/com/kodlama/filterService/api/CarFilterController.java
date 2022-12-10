@@ -20,47 +20,47 @@ public class CarFilterController {
 
     @GetMapping
     public List<GetAllFilterResponse> getAll() {
-        return carFilterService.getAll();
+        return carFilterService.getAll(); 
     }
 
     @GetMapping("/brand")
-    public List<GetAllFilterResponse> getByBrandName(@RequestParam String brandName) {
-        return carFilterService.getByBrandName(brandName);
+    public List<GetAllFilterResponse> getByBrandName(@RequestParam String carBrandName) {
+        return carFilterService.getByCarBrandName(carBrandName);
     }
 
     @GetMapping("/model")
-    public List<GetAllFilterResponse> getByModelName(@RequestParam String modelName) {
-        return carFilterService.getByModelName(modelName);
+    public List<GetAllFilterResponse> getByModelName(@RequestParam String carModelName) {
+        return carFilterService.getByCarModelName(carModelName);
     }
 
     @GetMapping("/plate")
-    public List<GetAllFilterResponse> getByPlate(@RequestParam String plate) {
-        return carFilterService.getByPlate(plate);
+    public List<GetAllFilterResponse> getByPlate(@RequestParam String carPlate) {
+        return carFilterService.getByCarPlate(carPlate);
     }
 
     @GetMapping("/plate_search")
-    public List<GetAllFilterResponse> searchByPlate(@RequestParam String plate) {
-        return carFilterService.searchByPlate(plate);
+    public List<GetAllFilterResponse> searchByPlate(@RequestParam String carPlate) {
+        return carFilterService.searchByCarPlate(carPlate);
     }
 
     @GetMapping("/brand_search")
-    public List<GetAllFilterResponse> searchByBrandName(@RequestParam String brandName) {
-        return carFilterService.searchByBrandName(brandName);
+    public List<GetAllFilterResponse> searchByBrandName(@RequestParam String carBrandName) {
+        return carFilterService.searchByCarBrandName(carBrandName);
     }
 
     @GetMapping("/model_search")
-    public List<GetAllFilterResponse> searchByModelName(@RequestParam String modelName) {
-        return carFilterService.searchByModelName(modelName);
+    public List<GetAllFilterResponse> searchByModelName(@RequestParam String carModelName) {
+        return carFilterService.searchByCarModelName(carModelName);
     }
 
     @GetMapping("/year")
-    public List<GetAllFilterResponse> getByModelYear(@RequestParam int modelYear) {
-        return carFilterService.getByModelYear(modelYear);
+    public List<GetAllFilterResponse> getByModelYear(@RequestParam int carModelYear) {
+        return carFilterService.getByCarModelYear(carModelYear);
     }
 
     @GetMapping("/state")
-    public List<GetAllFilterResponse> getByState(@RequestParam int state) {
-        return carFilterService.getByState(state);
+    public List<GetAllFilterResponse> getByState(@RequestParam int carState) {
+        return carFilterService.getByCarState(carState);
     }
 }
 

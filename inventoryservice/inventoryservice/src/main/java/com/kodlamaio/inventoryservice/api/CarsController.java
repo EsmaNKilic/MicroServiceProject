@@ -14,17 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kodlamaio.inventoryservice.business.abstracts.CarService;
-import com.kodlamaio.inventoryservice.business.requests.Create.CreateBrandRequest;
 import com.kodlamaio.inventoryservice.business.requests.Create.CreateCarRequest;
-import com.kodlamaio.inventoryservice.business.requests.Update.UpdateBrandRequest;
 import com.kodlamaio.inventoryservice.business.requests.Update.UpdateCarRequest;
-import com.kodlamaio.inventoryservice.business.responses.Create.CreateBrandResponse;
 import com.kodlamaio.inventoryservice.business.responses.Create.CreateCarResponse;
-import com.kodlamaio.inventoryservice.business.responses.Get.GetBrandResponse;
 import com.kodlamaio.inventoryservice.business.responses.Get.GetCarResponse;
-import com.kodlamaio.inventoryservice.business.responses.GetAll.GetAllBrandResponse;
 import com.kodlamaio.inventoryservice.business.responses.GetAll.GetAllCarResponse;
-import com.kodlamaio.inventoryservice.business.responses.Update.UpdateBrandResponse;
 import com.kodlamaio.inventoryservice.business.responses.Update.UpdateCarResponse;
 
 import lombok.AllArgsConstructor;
@@ -63,7 +57,13 @@ public class CarsController {
 	
 	@GetMapping("/checkcaravailable/{id}")
 	public void checkIfCarAvailable(@PathVariable String id) {
-	        this.carService.checkIfCarAvailable(id);
-	    }
+	     this.carService.checkIfCarAvailable(id);
+	}
+
+    @GetMapping("/getcarresponse/{id}")
+    public GetCarResponse getCarResponse(@PathVariable String id) {
+        return this.carService.getById(id);
+    }
+	
 }
 

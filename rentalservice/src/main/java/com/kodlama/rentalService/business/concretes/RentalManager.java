@@ -78,12 +78,13 @@ public class RentalManager implements RentalService {
 		double totalPrice= createRentalRequest.getDailyPrice() * createRentalRequest.getRentedForDays();
 		rental.setTotalPrice(totalPrice);
 		
-		paymentClient.checkIfPaymentSuccess(createPaymentRequest.getCardNumber(),
+		paymentClient.checkIfPaymentSuccess(
+				createPaymentRequest.getCardNumber(),
 				createPaymentRequest.getNameOnCard(),
 				createPaymentRequest.getCardExpirationYear(),
 				createPaymentRequest.getCardExpirationMonth(),
 				createPaymentRequest.getCvv(),
-                totalPrice);
+				totalPrice);
 		
 		this.rentalRepository.save(rental);
 		

@@ -1,0 +1,16 @@
+package com.kodlama.rentalService.client;
+
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.kodlamaio.common.CreateRentalPaymentRequest;
+
+@FeignClient(value = "paymentclient", url = "http://localhost:9011/")
+public interface PaymentClient {
+	
+    @RequestMapping(method = RequestMethod.POST, value = "payment/api/payments/check")
+    
+    void checkIfPaymentSuccess(@RequestBody CreateRentalPaymentRequest createRentalPaymentRequest);
+}

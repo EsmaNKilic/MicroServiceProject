@@ -8,23 +8,23 @@ import com.kodlama.filterService.entities.CarFilter;
 public interface CarFilterService {
 
 	List<GetAllFilterResponse> getAll();
-    List<GetAllFilterResponse> getByBrandName(String brandName);
-    List<GetAllFilterResponse> getByModelName(String modelName);
-    List<GetAllFilterResponse> getByPlate(String plate);
-    List<GetAllFilterResponse> searchByPlate(String plate);
-    List<GetAllFilterResponse> searchByBrandName(String brandName);
-    List<GetAllFilterResponse> searchByModelName(String modelName);
-    List<GetAllFilterResponse> getByModelYear(int modelYear);
-    List<GetAllFilterResponse> getByState(int state);
+    List<GetAllFilterResponse> getByCarBrandName(String carBrandName);
+    List<GetAllFilterResponse> getByCarModelName(String carModelName);
+    List<GetAllFilterResponse> getByCarPlate(String carPlate);
+    List<GetAllFilterResponse> searchByCarPlate(String carPlate);
+    List<GetAllFilterResponse> searchByCarBrandName(String carBrandName);
+    List<GetAllFilterResponse> searchByCarModelName(String carModelName);
+    List<GetAllFilterResponse> getByCarModelYear(int carModelYear);
+    List<GetAllFilterResponse> getByCarState(int carState);
 
     // For Consumer Services
     
     CarFilter getByCarId(String id);
-    List<CarFilter> getByModelId(String modelId);
-    List<CarFilter> getByBrandId(String brandId);
+    List<CarFilter> getByCarModelId(String carModelId);
+    List<CarFilter> getByCarBrandId(String carBrandId);
     void save(CarFilter mongodb);
     void delete(String id);
-    void deleteAllByBrandId(String brandId);
-    void deleteAllByModelId(String modelId);
+    void deleteAllByCarBrandId(String carBrandId);
+    void deleteAllByCarModelId(String carModelId);
 }
  

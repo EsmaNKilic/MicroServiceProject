@@ -1,5 +1,0 @@
-package com.kodlama.rentalService.kafka;
-
-public class RentalUpdateProducer {
-
-}

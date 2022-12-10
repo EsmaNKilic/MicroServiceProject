@@ -8,7 +8,7 @@ spring:
       server:
         default-label: master
         git:
-          uri: https://github.com/EsmaNKilic/microservice-config-server
+          uri: https://github.com/EsmaNKilic/microserviceConfigServer
   profiles:
     active: dev
 

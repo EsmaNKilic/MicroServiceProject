@@ -1,0 +1,88 @@
+package com.kodlama.rentalService.api;
+
+import java.util.List;
+
+import javax.validation.Valid;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.kodlama.rentalService.business.abstracts.RentalService;
+import com.kodlama.rentalService.business.requests.CreatePaymentRequest;
+import com.kodlama.rentalService.business.requests.CreateRentalRequest;
+import com.kodlama.rentalService.business.requests.UpdateRentalRequest;
+import com.kodlama.rentalService.business.response.CreateRentalResponse;
+import com.kodlama.rentalService.business.response.GetAllRentalResponse;
+import com.kodlama.rentalService.business.response.GetRentalResponse;
+import com.kodlama.rentalService.business.response.UpdateRentalResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
+@RestController 
+@RequestMapping("/api/rentals")
+public class RentalsController {
+
+	private RentalService rentalService;
+	
+	Logger logger = LoggerFactory.getLogger(RentalsController.class);
+	
+	public RentalsController(RentalService rentalService) {
+		
+		this.rentalService = rentalService;
+	}
+
+	  
+	@GetMapping
+	public List<GetAllRentalResponse> getAll(){
+		
+		logger.info("Getting all rentals");
+		
+		return this.rentalService.getAll();
+	}
+	
+	@GetMapping("/{id}")
+	public GetRentalResponse getById(@PathVariable String id) {
+		return this.rentalService.getById(id);
+	}
+	
+	@PostMapping
+	public CreateRentalResponse add(
+			@Valid @RequestBody CreateRentalRequest createRentalRequest,
+			@RequestParam String cardNumber,
+			@RequestParam String nameOnCard,
+			@RequestParam int cardExpirationYear,
+            @RequestParam int cardExpirationMonth,
+            @RequestParam String cvv) {
+         
+            logger.info("Adding new rental");
+            
+	        CreatePaymentRequest creatPaymentRequest = new CreatePaymentRequest(
+	        		cardNumber,
+	                nameOnCard,
+	                cardExpirationYear,
+	                cardExpirationMonth,
+	                cvv);
+	        return this.rentalService.add(createRentalRequest, creatPaymentRequest);
+	}
+	
+	@PutMapping
+	public UpdateRentalResponse update(@Valid @RequestBody UpdateRentalRequest updateRentalRequest) {
+		return this.rentalService.update(updateRentalRequest);
+	}
+	
+	@DeleteMapping("/{id}")
+	public void delete(@PathVariable String id) {
+		this.rentalService.delete(id);
+	}
+}

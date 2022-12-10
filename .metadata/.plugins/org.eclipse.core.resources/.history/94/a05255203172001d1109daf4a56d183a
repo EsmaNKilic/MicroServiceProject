@@ -1,8 +1,0 @@
-package com.kodlama.rentalService.business.abstracts;
-
-import org.springframework.cloud.openfeign.FeignClient;
-
-@FeignClient
-public interface RentService {
-
-}

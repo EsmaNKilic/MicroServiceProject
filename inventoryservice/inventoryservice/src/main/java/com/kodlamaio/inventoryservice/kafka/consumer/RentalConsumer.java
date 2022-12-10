@@ -5,6 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
+import com.kodlamaio.common.CarState;
+import com.kodlamaio.common.events.rentals.CarRentalCreatedEvent;
+import com.kodlamaio.common.events.rentals.CarRentalDeletedEvent;
+import com.kodlamaio.common.events.rentals.CarRentalUpdatedEvent;
 import com.kodlamaio.common.events.rentals.RentalCreatedEvent;
 import com.kodlamaio.common.events.rentals.RentalDeletedEvent;
 import com.kodlamaio.common.events.rentals.RentalUpdatedEvent;
@@ -28,10 +32,13 @@ private static final Logger LOGGER = LoggerFactory.getLogger(RentalConsumer.clas
 	
 	public void consume(RentalCreatedEvent event) {
 		
-		carService.updateCarState(3); 
+		carService.updateCarState(CarState.RENTED);
 		event.getCarId();
-		
-		LOGGER.info(String.format("Order event received in stock service => %s", event.toString()));
+		CarRentalCreatedEvent carRentalCreatedEvent = new CarRentalCreatedEvent();
+        carRentalCreatedEvent.setCarId(event.getCarId());
+        carRentalCreatedEvent.setMessage("Car rented!");
+        inventoryProducer.sendMessage(carRentalCreatedEvent);
+        LOGGER.info("Car rented!");
 		
 		// save the order event into the database
 	}
@@ -40,12 +47,16 @@ private static final Logger LOGGER = LoggerFactory.getLogger(RentalConsumer.clas
 	
 	public void consume(RentalUpdatedEvent event) {
 		
-		carService.updateCarState(1);
+		carService.updateCarState(CarState.AVAILABLE);
 		event.getOldCarId();
-	    carService.updateCarState(3); 
-	    event.getNewCarId();
-		
-		LOGGER.info(String.format("Order event received in stock service => %s", event.toString()));
+        carService.updateCarState(CarState.RENTED);
+        event.getNewCarId();
+        CarRentalUpdatedEvent carRentalUpdatedEvent = new CarRentalUpdatedEvent();
+        carRentalUpdatedEvent.setNewCarId(event.getNewCarId());
+        carRentalUpdatedEvent.setOldCarId(event.getOldCarId());
+        carRentalUpdatedEvent.setMessage("Car rented state updated!");
+        inventoryProducer.sendMessage(carRentalUpdatedEvent);
+        LOGGER.info("Car rented state updated!");
 			
 	}
 	
@@ -53,10 +64,13 @@ private static final Logger LOGGER = LoggerFactory.getLogger(RentalConsumer.clas
 	
 	public void consume(RentalDeletedEvent event) {
 		
-		carService.updateCarState(1); 
+		carService.updateCarState(CarState.AVAILABLE);
 		event.getCarId();
-		
-		LOGGER.info(String.format("Order event received in stock service => %s", event.toString()));
+        CarRentalDeletedEvent carRentalDeletedEvent = new CarRentalDeletedEvent();
+        carRentalDeletedEvent.setCarId(event.getCarId());
+        carRentalDeletedEvent.setMessage("Car deleted from rental!");
+        inventoryProducer.sendMessage(carRentalDeletedEvent);
+        LOGGER.info("Car deleted from rental!");
 		
 	}
 }

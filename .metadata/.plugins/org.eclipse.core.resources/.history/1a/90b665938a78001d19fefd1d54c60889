@@ -1,0 +1,30 @@
+package com.kodlama.filterService.dataAccess;
+
+import java.util.List;
+
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+import com.kodlama.filterService.entities.CarFilter;
+
+public interface CarFilterRepository extends MongoRepository<CarFilter,String>{
+	
+	List<CarFilter> findByBrandId(String carBrandId);
+	List<CarFilter> findByBrandNameIgnoreCase(String carBrandName);
+	List<CarFilter> findByBrandNameContainingIgnoreCase(String carBrandName);
+	
+	List<CarFilter> findByModelId(String carModelId);
+	List<CarFilter> findByModelNameIgnoreCase(String carModelName);
+	List<CarFilter> findByModelNameContainingIgnoreCase(String carModelName);
+	List<CarFilter> findByModelYear(int carModelYear);
+	
+	List<CarFilter> findByPlateIgnoreCase(String carPlate);
+	List<CarFilter> findByPlateContainingIgnoreCase(String carPlate);
+
+	List<CarFilter> findByState(int carState);
+	 
+	CarFilter findByCarId(String carId);
+	 
+	void deleteByCarId(String carId);
+	void deleteAllByBrandId(String carBrandId);
+	void deleteAllByModelId(String carModelId);
+}

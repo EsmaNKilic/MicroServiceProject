@@ -1,0 +1,147 @@
+package com.kodlama.paymentService.business.concretes;
+
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+
+import com.kodlama.paymentService.business.requests.PaymentRequest;
+import com.kodlama.paymentService.business.abstracts.PaymentService;
+import com.kodlama.paymentService.business.abstracts.PosService;
+import com.kodlama.paymentService.business.requests.CreatePaymentRequest;
+import com.kodlama.paymentService.business.requests.UpdatePaymentRequest;
+import com.kodlama.paymentService.business.responses.CreatePaymentResponse;
+import com.kodlama.paymentService.business.responses.GetAllPaymentResponse;
+import com.kodlama.paymentService.business.responses.GetPaymentResponse;
+import com.kodlama.paymentService.business.responses.UpdatePaymentResponse;
+import com.kodlama.paymentService.dataAccess.PaymentRepository;
+import com.kodlama.paymentService.entities.Payment;
+import com.kodlamaio.common.utilities.exceptions.BusinessException;
+import com.kodlamaio.common.utilities.mapping.ModelMapperService;
+
+import lombok.AllArgsConstructor;
+
+@Service
+@AllArgsConstructor
+public class PaymentManager implements PaymentService{
+
+	private PaymentRepository paymentRepository;
+	private ModelMapperService modelMapperService;
+	private PosService posService;
+	
+	@Override
+	public List<GetAllPaymentResponse> getAll() {
+		
+		List<Payment> payments = this.paymentRepository.findAll();
+		List<GetAllPaymentResponse> response = payments.stream()
+				.map(payment -> modelMapperService.forResponse()
+				.map(payment, GetAllPaymentResponse.class)).collect(Collectors.toList());
+	
+		return response;
+	}
+
+	@Override
+	public GetPaymentResponse getById(String id) {
+		
+		checkIfPaymentExists(id);
+		
+		Payment payment = this.paymentRepository.findById(id).get();
+		
+		GetPaymentResponse response = this.modelMapperService.forResponse()
+				.map(payment, GetPaymentResponse.class);
+		
+		return response;
+	}
+
+	@Override
+	public CreatePaymentResponse add(CreatePaymentRequest createPaymentRequest) {
+		
+		checkIfCardNumberExists(createPaymentRequest.getCardNumber());
+		
+		Payment payment = modelMapperService.forRequest().map(createPaymentRequest, Payment.class);
+        payment.setId(UUID.randomUUID().toString());
+        
+        this.paymentRepository.save(payment);
+        
+        CreatePaymentResponse response = this.modelMapperService.forResponse()
+        		.map(payment, CreatePaymentResponse.class);
+		
+		return response;
+	}
+
+	@Override
+	public UpdatePaymentResponse update(UpdatePaymentRequest updatePaymentRequest) {
+		
+		checkIfPaymentExists(updatePaymentRequest.getId());
+		
+		Payment payment = modelMapperService.forRequest().map(updatePaymentRequest, Payment.class);
+		payment.setId(updatePaymentRequest.getId());
+		
+		this.paymentRepository.save(payment);
+		
+		UpdatePaymentResponse response = this.modelMapperService.forResponse()
+				.map(payment, UpdatePaymentResponse.class);
+		
+		return response;
+	}
+
+	@Override
+	public void delete(String id) {
+		
+		checkIfPaymentExists(id);
+		
+		this.paymentRepository.deleteById(id);
+		
+	}
+
+	@Override
+    public void checkIfPaymentSuccess(PaymentRequest checkPaymentRequest) {
+        checkPayment(checkPaymentRequest);
+    }
+
+	
+	// CONTROLS
+	
+	
+	private void checkPayment(PaymentRequest checkPaymentRequest) {
+        if (!paymentRepository.existsByNameOnCardAndCardNumberAndCardExpirationYearAndCardExpirationMonthAndCvv(
+        		checkPaymentRequest.getNameOnCard(),
+        		checkPaymentRequest.getCardNumber(),
+        		checkPaymentRequest.getCardExpirationYear(),
+        		checkPaymentRequest.getCardExpirationMonth(),
+        		checkPaymentRequest.getCvv())) {
+            throw new BusinessException("NOT A VALID PAYMENT");
+        } else {
+            double balance = paymentRepository.findByCardNumber(checkPaymentRequest.getCardNumber()).getBalance();
+            if (balance < checkPaymentRequest.getPrice()) {
+                throw new BusinessException("NOT ENOUGH MONEY");
+            } else {
+                posService.pay();
+                Payment payment = paymentRepository.findByCardNumber(checkPaymentRequest.getCardNumber());
+                payment.setBalance(balance - checkPaymentRequest.getPrice());
+                paymentRepository.save(payment);
+            }
+        }
+    }
+	
+	
+	private void checkIfPaymentExists(String id) {
+		
+		if(!this.paymentRepository.existsById(id)) {
+			
+			throw new BusinessException("PAYMENT NOT EXIST");
+			
+		}
+	}
+	
+	
+	private void checkIfCardNumberExists(String cardNumber) {
+		
+		if(this.paymentRepository.existsByCardNumber(cardNumber));
+		
+		throw new BusinessException("CARD NUMBER ALREADY EXIST");
+		
+	}
+
+}

@@ -18,5 +18,5 @@ public class CreateRentalRequest {
     @NotNull
     @Min(0)
     private double dailyPrice;
-
+    private CreatePaymentRequest CreatePaymentRequest;
 }

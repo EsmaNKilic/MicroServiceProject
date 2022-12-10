@@ -70,7 +70,7 @@ public class InventoryConsumer {
     
     public void consume(BrandDeletedEvent event) {
     	
-    	carFilterService.deleteAllByBrandId(event.getBrandId());
+    	carFilterService.deleteAllByCarBrandId(event.getBrandId());
 
         LOGGER.info("Brand deleted event consumed: {}", event);
     }
@@ -79,7 +79,7 @@ public class InventoryConsumer {
     
     public void consume(BrandUpdatedEvent event) {
     	
-    	carFilterService.getByBrandId(event.getId()).forEach(
+    	carFilterService.getByCarBrandId(event.getId()).forEach(
     			carFilter -> {carFilter.setCarBrandName(event.getName());
         
     	carFilterService.save(carFilter);
@@ -92,7 +92,7 @@ public class InventoryConsumer {
     
     public void consume(ModelDeletedEvent event) {
     	
-    	carFilterService.deleteAllByModelId(event.getModelId());
+    	carFilterService.deleteAllByCarModelId(event.getModelId());
 
         LOGGER.info("Model deleted event consumed: {}", event);
     }
@@ -101,12 +101,12 @@ public class InventoryConsumer {
     
     public void consume(ModelUpdatedEvent event) {
     	
-    	carFilterService.getByModelId(event.getId()).forEach(
+    	carFilterService.getByCarModelId(event.getId()).forEach(
     			carFilter -> {carFilter.setCarModelName(event.getName());
         
     	carFilter.setCarBrandId(event.getBrandId());
             
-    	carFilter.setCarBrandName(carFilterService.getByBrandId(event.getBrandId()).get(0).getCarBrandName());
+    	carFilter.setCarBrandName(carFilterService.getByCarBrandId(event.getBrandId()).get(0).getCarBrandName());
             
     	carFilterService.save(carFilter);
         });

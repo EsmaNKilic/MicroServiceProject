@@ -2,7 +2,7 @@
 <section name="Workbench">
 	<section name="org.eclipse.jdt.debug.ui.MAIN_METHOD_SELECTION_DIALOG">
 		<item key="ShowStatusLine" value="true"/>
-		<item key="History" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#x0D;&#x0A;&lt;History&gt;&#x0D;&#x0A;&lt;historyRootNode/&gt;&#x0D;&#x0A;&lt;/History&gt;"/>
+		<item key="History" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#x0D;&#x0A;&lt;History&gt;&#x0D;&#x0A;&lt;historyRootNode&gt;&#x0D;&#x0A;&lt;infoNode&gt;=inventoryservice/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&amp;lt;com.kodlamaio.inventoryservice{InventoryserviceApplication.java[InventoryserviceApplication&lt;/infoNode&gt;&#x0D;&#x0A;&lt;infoNode&gt;=filterservice/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&amp;lt;com.kodlama.filterService{FilterserviceApplication.java[FilterserviceApplication&lt;/infoNode&gt;&#x0D;&#x0A;&lt;infoNode&gt;=invoice-service/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&amp;lt;com.kodlama.invoiceService{InvoiceServiceApplication.java[InvoiceServiceApplication&lt;/infoNode&gt;&#x0D;&#x0A;&lt;infoNode&gt;=rentalservice/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&amp;lt;com.kodlama.rentalService{RentalServiceApplication.java[RentalServiceApplication&lt;/infoNode&gt;&#x0D;&#x0A;&lt;infoNode&gt;=payment-service/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&amp;lt;com.kodlama.paymentService{PaymentServiceApplication.java[PaymentServiceApplication&lt;/infoNode&gt;&#x0D;&#x0A;&lt;/historyRootNode&gt;&#x0D;&#x0A;&lt;/History&gt;"/>
 		<section name="DialogBoundsSettings">
 			<item key="DIALOG_HEIGHT" value="500"/>
 			<item key="DIALOG_WIDTH" value="600"/>
@@ -10,5 +10,7 @@
 			<item key="DIALOG_Y_ORIGIN" value="186"/>
 			<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>
 		</section>
+	</section>
+	<section name="expressionHistory">
 	</section>
 </section>

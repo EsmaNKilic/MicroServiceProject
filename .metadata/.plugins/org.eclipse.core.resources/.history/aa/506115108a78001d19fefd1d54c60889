@@ -1,0 +1,30 @@
+package com.kodlama.filterService.business.abstracts;
+
+import java.util.List;
+
+import com.kodlama.filterService.business.responses.GetAllFilterResponse;
+import com.kodlama.filterService.entities.CarFilter;
+
+public interface CarFilterService {
+
+	List<GetAllFilterResponse> getAll();
+    List<GetAllFilterResponse> getByBrandName(String carBrandName);
+    List<GetAllFilterResponse> getByModelName(String carModelName);
+    List<GetAllFilterResponse> getByPlate(String carPlate);
+    List<GetAllFilterResponse> searchByPlate(String carPlate);
+    List<GetAllFilterResponse> searchByBrandName(String carBrandName);
+    List<GetAllFilterResponse> searchByModelName(String carModelName);
+    List<GetAllFilterResponse> getByModelYear(int carModelYear);
+    List<GetAllFilterResponse> getByState(int carState);
+
+    // For Consumer Services
+    
+    CarFilter getByCarId(String carId);
+    List<CarFilter> getByModelId(String carModelId);
+    List<CarFilter> getByBrandId(String carBrandId);
+    void save(CarFilter mongodb);
+    void delete(String carId);
+    void deleteAllByBrandId(String carBrandId);
+    void deleteAllByModelId(String carModelId);
+}
+ 

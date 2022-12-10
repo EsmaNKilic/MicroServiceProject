@@ -1,5 +1,0 @@
-package com.kodlama.rentalService.dataAccess;
-
-public class RentalResponse {
-
-}

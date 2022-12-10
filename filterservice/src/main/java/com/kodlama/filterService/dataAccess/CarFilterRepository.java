@@ -8,18 +8,25 @@ import com.kodlama.filterService.entities.CarFilter;
 
 public interface CarFilterRepository extends MongoRepository<CarFilter,String>{
 	
-	 List<CarFilter> findByBrandNameIgnoreCase(String brandName);
-	 List<CarFilter> findByModelNameIgnoreCase(String modelName);
-	 List<CarFilter> findByPlateIgnoreCase(String plate);
-	 List<CarFilter> findByPlateContainingIgnoreCase(String plate);
-	 List<CarFilter> findByBrandNameContainingIgnoreCase(String brandName);
-	 List<CarFilter> findByModelNameContainingIgnoreCase(String modelName);
-	 List<CarFilter> findByModelYear(int modelYear);
-	 List<CarFilter> findByModelId(String modelId);
-	 List<CarFilter> findByBrandId(String brandId);
-	 List<CarFilter> findByState(int state);
-	 CarFilter findByCarId(String carId);
-	 void deleteByCarId(String carId);
-	 void deleteAllByBrandId(String brandId);
-	 void deleteAllByModelId(String modelId);
+	List<CarFilter> findByCarBrandId(String carBrandId);
+	List<CarFilter> findByCarBrandNameIgnoreCase(String carBrandName);
+	List<CarFilter> findByCarBrandNameContainingIgnoreCase(String carBrandName);
+	
+	List<CarFilter> findByCarModelId(String carModelId);
+	List<CarFilter> findByCarModelNameIgnoreCase(String carModelName);
+	List<CarFilter> findByCarModelNameContainingIgnoreCase(String carModelName);
+	List<CarFilter> findByCarModelYear(int carModelYear);
+	
+	List<CarFilter> findByCarPlateIgnoreCase(String carPlate);
+	List<CarFilter> findByCarPlateContainingIgnoreCase(String carPlate);
+
+	List<CarFilter> findByCarState(int carState);
+	 
+	CarFilter findByCarId(String carId);
+	 
+	void deleteByCarId(String carId);
+	void deleteAllByCarBrandId(String carBrandId);
+	void deleteAllByCarModelId(String carModelId);
+	
+	boolean existsByCarPlate(String carPlate);
 }

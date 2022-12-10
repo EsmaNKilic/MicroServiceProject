@@ -34,7 +34,7 @@ public class InvoicesController {
 	@GetMapping
 	public List<GetAllInvoiceResponse> getAll() {
 		return this.invoiceService.getAll();
-	}
+	} 
 	
 	@GetMapping("/{id}")
 	public GetInvoiceResponse getById(@PathVariable String id) {

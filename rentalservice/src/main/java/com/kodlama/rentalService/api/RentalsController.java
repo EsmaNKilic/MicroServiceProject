@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,12 +25,6 @@ import com.kodlama.rentalService.business.response.GetAllRentalResponse;
 import com.kodlama.rentalService.business.response.GetRentalResponse;
 import com.kodlama.rentalService.business.response.UpdateRentalResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import lombok.AllArgsConstructor;
-
-@AllArgsConstructor
 @RestController 
 @RequestMapping("/api/rentals")
 public class RentalsController {
@@ -42,7 +38,7 @@ public class RentalsController {
 		this.rentalService = rentalService;
 	}
 
-	  
+	   
 	@GetMapping
 	public List<GetAllRentalResponse> getAll(){
 		
@@ -85,7 +81,4 @@ public class RentalsController {
 	public void delete(@PathVariable String id) {
 		this.rentalService.delete(id);
 	}
-
-	
-
 }

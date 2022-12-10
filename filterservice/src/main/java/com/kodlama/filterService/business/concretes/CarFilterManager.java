@@ -33,9 +33,9 @@ public class CarFilterManager implements CarFilterService{
 	    }
 
 	    @Override
-	    public List<GetAllFilterResponse> getByBrandName(String brandName) {
+	    public List<GetAllFilterResponse> getByCarBrandName(String carBrandName) {
 	    	
-	        List<CarFilter> filters = carFilterRepository.findByBrandNameIgnoreCase(brandName);
+	        List<CarFilter> filters = carFilterRepository.findByCarBrandNameIgnoreCase(carBrandName);
 	        
 	        List<GetAllFilterResponse> response = filters.stream()
 	                .map(carFilter -> modelMapperService.forResponse()
@@ -45,9 +45,9 @@ public class CarFilterManager implements CarFilterService{
 	    }
 
 	    @Override
-	    public List<GetAllFilterResponse> getByModelName(String modelName) {
+	    public List<GetAllFilterResponse> getByCarModelName(String carModelName) {
 	    	
-	        List<CarFilter> filters = carFilterRepository.findByModelNameIgnoreCase(modelName);
+	        List<CarFilter> filters = carFilterRepository.findByCarModelNameIgnoreCase(carModelName);
 	        
 	        List<GetAllFilterResponse> response = filters.stream()
 	                .map(carFilter -> modelMapperService.forResponse()
@@ -57,9 +57,11 @@ public class CarFilterManager implements CarFilterService{
 	    }
 
 	    @Override
-	    public List<GetAllFilterResponse> getByPlate(String plate) {
+	    public List<GetAllFilterResponse> getByCarPlate(String carPlate) {
 	    	
-	        List<CarFilter> filters = carFilterRepository.findByPlateIgnoreCase(plate);
+	    	checkIfExistByPlate(carPlate);
+	    	
+	        List<CarFilter> filters = carFilterRepository.findByCarPlateIgnoreCase(carPlate);
 	        
 	        List<GetAllFilterResponse> response = filters.stream()
 	                .map(filter -> modelMapperService.forResponse()
@@ -69,9 +71,9 @@ public class CarFilterManager implements CarFilterService{
 	    }
 
 	    @Override
-	    public List<GetAllFilterResponse> searchByPlate(String plate) {
+	    public List<GetAllFilterResponse> searchByCarPlate(String carPlate) {
 	    	
-	        List<CarFilter> filters = carFilterRepository.findByPlateContainingIgnoreCase(plate);
+	        List<CarFilter> filters = carFilterRepository.findByCarPlateContainingIgnoreCase(carPlate);
 	        
 	        List<GetAllFilterResponse> response = filters.stream()
 	                .map(filter -> modelMapperService.forResponse()
@@ -81,9 +83,9 @@ public class CarFilterManager implements CarFilterService{
 	    }
 
 	    @Override
-	    public List<GetAllFilterResponse> searchByBrandName(String brandName) {
+	    public List<GetAllFilterResponse> searchByCarBrandName(String carBrandName) {
 	    	
-	        List<CarFilter> filters = carFilterRepository.findByBrandNameContainingIgnoreCase(brandName);
+	        List<CarFilter> filters = carFilterRepository.findByCarBrandNameContainingIgnoreCase(carBrandName);
 	        
 	        List<GetAllFilterResponse> response = filters.stream()
 	                .map(filter -> modelMapperService.forResponse()
@@ -93,9 +95,9 @@ public class CarFilterManager implements CarFilterService{
 	    }
 
 	    @Override
-	    public List<GetAllFilterResponse> searchByModelName(String modelName) {
+	    public List<GetAllFilterResponse> searchByCarModelName(String carModelName) {
 	    	
-	        List<CarFilter> filters = carFilterRepository.findByModelNameContainingIgnoreCase(modelName);
+	        List<CarFilter> filters = carFilterRepository.findByCarModelNameContainingIgnoreCase(carModelName);
 	        
 	        List<GetAllFilterResponse> response = filters.stream()
 	                .map(filter -> modelMapperService.forResponse()
@@ -105,9 +107,9 @@ public class CarFilterManager implements CarFilterService{
 	    }
 
 	    @Override
-	    public List<GetAllFilterResponse> getByModelYear(int modelYear) {
+	    public List<GetAllFilterResponse> getByCarModelYear(int carModelYear) {
 	    	
-	        List<CarFilter> filters = carFilterRepository.findByModelYear(modelYear);
+	        List<CarFilter> filters = carFilterRepository.findByCarModelYear(carModelYear);
 	        
 	        List<GetAllFilterResponse> response = filters.stream()
 	                .map(filter -> modelMapperService.forResponse()
@@ -117,9 +119,9 @@ public class CarFilterManager implements CarFilterService{
 	    }
 
 	    @Override
-	    public List<GetAllFilterResponse> getByState(int state) {
+	    public List<GetAllFilterResponse> getByCarState(int carState) {
 	    	
-	        List<CarFilter> filters = carFilterRepository.findByState(state);
+	        List<CarFilter> filters = carFilterRepository.findByCarState(carState);
 	        
 	        List<GetAllFilterResponse> response = filters.stream()
 	                .map(filter -> modelMapperService.forResponse()
@@ -134,13 +136,13 @@ public class CarFilterManager implements CarFilterService{
 	    }
 
 	    @Override
-	    public List<CarFilter> getByModelId(String modelId) {
-	        return carFilterRepository.findByModelId(modelId);
+	    public List<CarFilter> getByCarModelId(String carModelId) {
+	        return carFilterRepository.findByCarModelId(carModelId);
 	    }
 
 	    @Override
-	    public List<CarFilter> getByBrandId(String brandId) {
-	        return carFilterRepository.findByBrandId(brandId);
+	    public List<CarFilter> getByCarBrandId(String carBrandId) {
+	        return carFilterRepository.findByCarBrandId(carBrandId);
 	    }
 
 	    @Override
@@ -154,12 +156,18 @@ public class CarFilterManager implements CarFilterService{
 	    }
 
 	    @Override
-	    public void deleteAllByBrandId(String brandId) {
-	    	carFilterRepository.deleteAllByBrandId(brandId);
+	    public void deleteAllByCarBrandId(String carBrandId) {
+	    	carFilterRepository.deleteAllByCarBrandId(carBrandId);
 	    }
 
 	    @Override
-	    public void deleteAllByModelId(String modelId) {
-	    	carFilterRepository.deleteAllByModelId(modelId);
+	    public void deleteAllByCarModelId(String carModelId) {
+	    	carFilterRepository.deleteAllByCarModelId(carModelId);
+	    }
+	    
+	    private void checkIfExistByPlate(String carPlate) {
+	        if (!carFilterRepository.existsByCarPlate(carPlate)) {
+	            throw new RuntimeException("Filter Not Exists");
+	        }
 	    }
 }

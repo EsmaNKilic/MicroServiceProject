@@ -14,17 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kodlamaio.inventoryservice.business.abstracts.ModelService;
-import com.kodlamaio.inventoryservice.business.requests.Create.CreateCarRequest;
 import com.kodlamaio.inventoryservice.business.requests.Create.CreateModelRequest;
-import com.kodlamaio.inventoryservice.business.requests.Update.UpdateCarRequest;
 import com.kodlamaio.inventoryservice.business.requests.Update.UpdateModelRequest;
-import com.kodlamaio.inventoryservice.business.responses.Create.CreateCarResponse;
 import com.kodlamaio.inventoryservice.business.responses.Create.CreateModelResponse;
-import com.kodlamaio.inventoryservice.business.responses.Get.GetCarResponse;
 import com.kodlamaio.inventoryservice.business.responses.Get.GetModelResponse;
-import com.kodlamaio.inventoryservice.business.responses.GetAll.GetAllCarResponse;
 import com.kodlamaio.inventoryservice.business.responses.GetAll.GetAllModelResponse;
-import com.kodlamaio.inventoryservice.business.responses.Update.UpdateCarResponse;
 import com.kodlamaio.inventoryservice.business.responses.Update.UpdateModelResponse;
 
 import lombok.AllArgsConstructor;
@@ -60,4 +54,5 @@ public class ModelsController {
 	public void delete(@PathVariable String id) {
 		this.modelService.delete(id);
 	}
+	
 }

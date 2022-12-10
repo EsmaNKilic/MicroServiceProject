@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.kodlamaio.common.events.inventories.model.ModelDeletedEvent;
+import com.kodlamaio.common.events.inventories.model.ModelUpdatedEvent;
 import com.kodlamaio.common.utilities.exceptions.BusinessException;
 import com.kodlamaio.common.utilities.mapping.ModelMapperService;
 import com.kodlamaio.inventoryservice.business.abstracts.ModelService;
@@ -17,6 +19,7 @@ import com.kodlamaio.inventoryservice.business.responses.GetAll.GetAllModelRespo
 import com.kodlamaio.inventoryservice.business.responses.Update.UpdateModelResponse;
 import com.kodlamaio.inventoryservice.dataAccess.ModelRepository;
 import com.kodlamaio.inventoryservice.entities.Model;
+import com.kodlamaio.inventoryservice.kafka.producer.inventories.InventoryProducer;
 
 import lombok.AllArgsConstructor;
 
@@ -26,6 +29,7 @@ public class ModelManager implements ModelService {
 
 	private ModelRepository modelRepository;
 	private ModelMapperService modelMapperService;
+	private InventoryProducer inventoryProducer;
 	
 	@Override
 	public List<GetAllModelResponse> getAll() {
@@ -85,9 +89,21 @@ public class ModelManager implements ModelService {
 		UpdateModelResponse updateModelResponse = this.modelMapperService.forResponse()
 				.map(model, UpdateModelResponse.class);
 		
+		updateMongo(updateModelRequest.getId(), updateModelRequest.getName(), updateModelRequest.getBrandId());
+		
 		return updateModelResponse;
 	}
 
+	private void updateMongo(String id, String name, String brandId) {
+		
+        ModelUpdatedEvent event = new ModelUpdatedEvent();
+        
+        event.setId(id);
+        event.setName(name);
+        event.setBrandId(brandId);
+        
+        inventoryProducer.sendMessage(event);
+    }
 
 	@Override
 	public void delete(String id) {
@@ -96,7 +112,17 @@ public class ModelManager implements ModelService {
 		
 		this.modelRepository.deleteById(id);
 		
+		deleteMongo(id);
+		
 	}
+	
+	private void deleteMongo(String id) {
+		
+        ModelDeletedEvent event = new ModelDeletedEvent();
+        
+        event.setModelId(id);
+        inventoryProducer.sendMessage(event);
+    }
 	
 	
 	// CONTROLS
@@ -120,9 +146,5 @@ public class ModelManager implements ModelService {
 	}
 		
 	}
-	
-	
-	
-
 
 }

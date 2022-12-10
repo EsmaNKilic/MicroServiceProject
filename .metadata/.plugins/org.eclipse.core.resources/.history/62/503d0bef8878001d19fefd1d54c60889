@@ -1,0 +1,66 @@
+package com.kodlama.filterService.api;
+
+import java.util.List;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.kodlama.filterService.business.abstracts.CarFilterService;
+import com.kodlama.filterService.business.responses.GetAllFilterResponse;
+
+import lombok.AllArgsConstructor;
+
+@RestController
+@AllArgsConstructor
+@RequestMapping("/api/filters")
+public class CarFilterController {
+    private final CarFilterService carFilterService;
+
+    @GetMapping
+    public List<GetAllFilterResponse> getAll() {
+        return carFilterService.getAll(); 
+    }
+
+    @GetMapping("/brand")
+    public List<GetAllFilterResponse> getByBrandName(@RequestParam String brandName) {
+        return carFilterService.getByBrandName(brandName);
+    }
+
+    @GetMapping("/model")
+    public List<GetAllFilterResponse> getByModelName(@RequestParam String modelName) {
+        return carFilterService.getByModelName(modelName);
+    }
+
+    @GetMapping("/plate")
+    public List<GetAllFilterResponse> getByPlate(@RequestParam String plate) {
+        return carFilterService.getByPlate(plate);
+    }
+
+    @GetMapping("/plate_search")
+    public List<GetAllFilterResponse> searchByPlate(@RequestParam String plate) {
+        return carFilterService.searchByPlate(plate);
+    }
+
+    @GetMapping("/brand_search")
+    public List<GetAllFilterResponse> searchByBrandName(@RequestParam String brandName) {
+        return carFilterService.searchByBrandName(brandName);
+    }
+
+    @GetMapping("/model_search")
+    public List<GetAllFilterResponse> searchByModelName(@RequestParam String modelName) {
+        return carFilterService.searchByModelName(modelName);
+    }
+
+    @GetMapping("/year")
+    public List<GetAllFilterResponse> getByModelYear(@RequestParam int modelYear) {
+        return carFilterService.getByModelYear(modelYear);
+    }
+
+    @GetMapping("/state")
+    public List<GetAllFilterResponse> getByState(@RequestParam int state) {
+        return carFilterService.getByState(state);
+    }
+}
+
